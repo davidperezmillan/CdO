@@ -14,6 +14,7 @@ public class Serie {
     public Serie(String title) {
         this.title = title;
     }
+
     private int id;
     private String title;
     private String poster;

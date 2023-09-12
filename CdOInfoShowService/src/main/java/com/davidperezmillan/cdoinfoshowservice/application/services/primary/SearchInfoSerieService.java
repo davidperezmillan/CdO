@@ -26,10 +26,8 @@ public class SearchInfoSerieService implements SearchInfoUseCase {
     public Serie[] search(String search) {
         return searchSeriesService.search(new Serie(search));
         /*
-        // filter only isSerie true
-        return Arrays.stream(searchSeriesService.search(search))
-                .filter(Serie::getIsSerie)
-                .toArray(Serie[]::new);
-        */
+         * // filter only isSerie true return Arrays.stream(searchSeriesService.search(search))
+         * .filter(Serie::getIsSerie) .toArray(Serie[]::new);
+         */
     }
 }

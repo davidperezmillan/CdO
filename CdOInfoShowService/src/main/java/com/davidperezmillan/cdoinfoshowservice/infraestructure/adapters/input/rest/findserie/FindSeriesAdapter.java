@@ -38,7 +38,7 @@ public class FindSeriesAdapter {
     }
 
     @CrossOrigin(origins = "http://localhost")
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "find", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<FindSeriesResponse> findSeries(@RequestParam String search) {
         log.info("FindSeries.findSeries: " + search);
         Serie serie = new Serie();
