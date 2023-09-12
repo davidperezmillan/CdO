@@ -19,8 +19,9 @@ public class SearchInfoSerieService implements SearchInfoUseCase {
 
     @Override
     public Serie[] search(Serie search) {
-        return Arrays.stream(searchSeriesService.search(search))
-                .sorted(Comparator.comparingInt(Serie::getYear).reversed()).toArray(Serie[]::new);
+        return searchSeriesService.search(search);
+/*        return Arrays.stream(searchSeriesService.search(search))
+                .sorted(Comparator.comparingInt(Serie::getYear).reversed()).toArray(Serie[]::new);*/
 
     }
 }
