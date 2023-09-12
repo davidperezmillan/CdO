@@ -36,4 +36,15 @@ public class FindSeriesAdapter {
         return new ResponseEntity<FindSeriesResponse>(response, HttpStatus.OK);
 
     }
+
+    @CrossOrigin(origins = "http://localhost")
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<FindSeriesResponse> findSeries(@RequestParam String search) {
+        log.info("FindSeries.findSeries: " + search);
+        Serie serie = new Serie();
+        serie.setTitle(search);
+        Serie[] list = searchInfoUseCase.search(serie);
+        FindSeriesResponse response = mapper.mapList(list, FindSeriesResponse.class);
+        return new ResponseEntity<FindSeriesResponse>(response, HttpStatus.OK);
+    }
 }

@@ -6,4 +6,6 @@ public interface SearchInfoUseCase {
 
     Serie[] search(Serie search);
 
+    Serie[] search(String search);
+
 }

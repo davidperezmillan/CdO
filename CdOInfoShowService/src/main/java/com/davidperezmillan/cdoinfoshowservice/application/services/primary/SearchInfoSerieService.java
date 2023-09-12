@@ -20,13 +20,16 @@ public class SearchInfoSerieService implements SearchInfoUseCase {
     @Override
     public Serie[] search(Serie search) {
         return searchSeriesService.search(search);
+    }
 
+    @Override
+    public Serie[] search(String search) {
+        return searchSeriesService.search(new Serie(search));
         /*
         // filter only isSerie true
         return Arrays.stream(searchSeriesService.search(search))
                 .filter(Serie::getIsSerie)
                 .toArray(Serie[]::new);
         */
-
     }
 }
