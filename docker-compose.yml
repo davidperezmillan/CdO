@@ -1,9 +1,9 @@
 version: '3'
 
 services:
-  microservicio:
+  infoshow:
     build:
-      context: .  # Usa el directorio actual como contexto para encontrar el Dockerfile
+      context: CdOInfoShowService/.  # Usa el directorio actual como contexto para encontrar el Dockerfile
       dockerfile: Dockerfile  # Nombre del Dockerfile
     image: infoshowseries # Nombre de la imagen resultante
     ports:
