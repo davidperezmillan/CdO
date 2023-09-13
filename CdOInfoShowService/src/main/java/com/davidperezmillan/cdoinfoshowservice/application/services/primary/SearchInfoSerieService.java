@@ -5,8 +5,6 @@ import com.davidperezmillan.cdoinfoshowservice.application.usecases.SearchInfoUs
 import com.davidperezmillan.cdoinfoshowservice.domain.model.Serie;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.Comparator;
 
 @Service
 public class SearchInfoSerieService implements SearchInfoUseCase {
@@ -24,7 +22,7 @@ public class SearchInfoSerieService implements SearchInfoUseCase {
 
     @Override
     public Serie[] search(String search) {
-        return searchSeriesService.search(new Serie(search));
+        return search(new Serie(search));
         /*
          * // filter only isSerie true return Arrays.stream(searchSeriesService.search(search))
          * .filter(Serie::getIsSerie) .toArray(Serie[]::new);
