@@ -1,9 +1,8 @@
 package com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax;
 
 import com.davidperezmillan.cdoinfoshowservice.application.converters.PlayMaxSearchMapperImpl;
-import com.davidperezmillan.cdoinfoshowservice.domain.model.Serie;
+import com.davidperezmillan.cdoinfoshowservice.domain.model.serie.Serie;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax.response.info.InfoPlayMaxResponse;
-import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax.response.search.SearchPlayMaxResponse;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +14,7 @@ public class PlayMaxAdapterTest {
     private static final String searchQuery = "Ahsoka";
     private static final int id = 135591;
 
-    private PlayMaxAdapter playMaxAdapter;
+    private final PlayMaxAdapter playMaxAdapter;
 
     public PlayMaxAdapterTest() {
         playMaxAdapter = new PlayMaxAdapter(new PlayMaxSearchMapperImpl());
@@ -36,7 +35,7 @@ public class PlayMaxAdapterTest {
     @Test
     public void info_serie_no_null_id() {
         InfoPlayMaxResponse response = playMaxAdapter.info(id);
-        assertNotNull(response.getResult().getInfo().getId());
+        assertEquals(id, response.getResult().getInfo().getId());
     }
 
 }

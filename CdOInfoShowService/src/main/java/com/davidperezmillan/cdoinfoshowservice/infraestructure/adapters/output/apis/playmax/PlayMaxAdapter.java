@@ -1,6 +1,6 @@
 package com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax;
 
-import com.davidperezmillan.cdoinfoshowservice.domain.model.Serie;
+import com.davidperezmillan.cdoinfoshowservice.domain.model.serie.Serie;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax.converter.PlayMaxSearchMapper;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax.response.info.InfoPlayMaxResponse;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax.response.search.SearchPlayMaxResponse;
@@ -37,7 +37,7 @@ public class PlayMaxAdapter {
     public Serie[] search(String search) {
         try {
             String url = String.format("https://playmax.mx/api/%s/get/search/v1/%s/%s/?query=%s&sessions=1",
-                    RETURN_FORMAT, API_KEY, AUTH_KEY, URLEncoder.encode(search, StandardCharsets.UTF_8.toString()));
+                    RETURN_FORMAT, API_KEY, AUTH_KEY, URLEncoder.encode(search, StandardCharsets.UTF_8));
             String jsonResponse = get(url);
             return searchInfoUseCase.mapList(getSearchPlayMaxResponse(jsonResponse), Serie[].class);
         } catch (Exception e) {
