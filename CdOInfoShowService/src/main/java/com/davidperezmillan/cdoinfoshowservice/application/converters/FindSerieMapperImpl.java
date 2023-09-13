@@ -1,11 +1,13 @@
 package com.davidperezmillan.cdoinfoshowservice.application.converters;
 
-import com.davidperezmillan.cdoinfoshowservice.domain.model.Serie;
+import com.davidperezmillan.cdoinfoshowservice.domain.model.serie.Serie;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.input.rest.findserie.converter.FindSerieMapper;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.input.rest.findserie.request.FindSeriesRequest;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.input.rest.findserie.response.FindSeriesResponse;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.input.rest.findserie.response.Item;
+import lombok.extern.log4j.Log4j2;
 
+@Log4j2
 public class FindSerieMapperImpl implements FindSerieMapper {
 
     @Override
@@ -22,8 +24,8 @@ public class FindSerieMapperImpl implements FindSerieMapper {
         response.setTitle(source.getTitle());
         response.setPoster(source.getPoster());
         response.setSerie(source.getIsSerie());
-        response.setYear(source.getYear());
-        response.setRating(source.getRating());
+        response.setYear(source.getInfo().getYear());
+        response.setRating(source.getInfo().getRating());
         return response;
     }
 
@@ -32,7 +34,7 @@ public class FindSerieMapperImpl implements FindSerieMapper {
         FindSeriesResponse response = new FindSeriesResponse();
         response.setItems(new Item[source.length]);
         Item[] series = response.getItems();
-        for (int i = 0; i < source.length; i++) {
+        for (int i = 0; i < series.length; i++) {
             response.getItems()[i] = map(source[i], Item.class);
         }
         return response;

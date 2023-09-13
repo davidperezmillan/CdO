@@ -1,6 +1,7 @@
 package com.davidperezmillan.cdoinfoshowservice.application.converters;
 
-import com.davidperezmillan.cdoinfoshowservice.domain.model.Serie;
+import com.davidperezmillan.cdoinfoshowservice.domain.model.serie.Info;
+import com.davidperezmillan.cdoinfoshowservice.domain.model.serie.Serie;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax.converter.PlayMaxSearchMapper;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax.response.search.FichaSearchItem;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax.response.search.SearchPlayMaxResponse;
@@ -13,8 +14,12 @@ public class PlayMaxSearchMapperImpl implements PlayMaxSearchMapper {
         s.setId(source.getId());
         s.setPoster(source.getPoster());
         s.setIsSerie(source.getIsSerie());
-        s.setYear(source.getYear());
-        s.setRating(source.getRating());
+
+        Info info = new Info();
+        info.setYear(source.getYear());
+        info.setRating(source.getRating());
+        s.setInfo(info);
+
         return s;
     }
 

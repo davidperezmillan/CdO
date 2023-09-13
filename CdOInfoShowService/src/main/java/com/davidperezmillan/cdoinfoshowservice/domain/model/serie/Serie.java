@@ -1,4 +1,4 @@
-package com.davidperezmillan.cdoinfoshowservice.domain.model;
+package com.davidperezmillan.cdoinfoshowservice.domain.model.serie;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,14 +11,10 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Serie {
 
-    public Serie(String title) {
-        this.title = title;
-    }
-
     private int id;
     private String title;
     private String poster;
     private Boolean isSerie;
-    private int year;
-    private double rating;
+
+    private Info info;
 }
