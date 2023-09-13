@@ -1,9 +1,7 @@
 package com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.input.rest.findserie;
 
 import com.davidperezmillan.cdoinfoshowservice.application.usecases.SearchInfoUseCase;
-import com.davidperezmillan.cdoinfoshowservice.domain.model.Serie;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.input.rest.findserie.converter.FindSerieMapper;
-import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.input.rest.findserie.request.FindSeriesRequest;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.input.rest.findserie.response.FindSeriesResponse;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,26 +23,14 @@ public class FindSeriesAdapter {
         this.searchInfoUseCase = searchInfoUseCase;
         this.mapper = mapper;
     }
-
-    @CrossOrigin(origins = "http://localhost")
-    @PostMapping(value = "find", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<FindSeriesResponse> findSeries(@RequestBody FindSeriesRequest findSeriesRequest) {
-        log.info("FindSeries.findSeries: " + findSeriesRequest.toString());
-        Serie serie = mapper.map(findSeriesRequest, Serie.class);
-        Serie[] list = searchInfoUseCase.search(serie);
-        FindSeriesResponse response = mapper.mapList(list, FindSeriesResponse.class);
-        return new ResponseEntity<FindSeriesResponse>(response, HttpStatus.OK);
-
-    }
+    
 
     @CrossOrigin(origins = "http://localhost")
     @GetMapping(value = "find", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<FindSeriesResponse> findSeries(@RequestParam String search) {
         log.info("FindSeries.findSeries: " + search);
-        Serie serie = new Serie();
-        serie.setTitle(search);
-        Serie[] list = searchInfoUseCase.search(serie);
-        FindSeriesResponse response = mapper.mapList(list, FindSeriesResponse.class);
-        return new ResponseEntity<FindSeriesResponse>(response, HttpStatus.OK);
+        return new ResponseEntity<FindSeriesResponse>(mapper.mapList(searchInfoUseCase.search(search), FindSeriesResponse.class), HttpStatus.OK);
+
+
     }
 }
