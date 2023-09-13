@@ -31,8 +31,8 @@ public class FindSeriesAdapter {
     public ResponseEntity<FindSeriesResponse> findSeries(@RequestBody FindSeriesRequest findSeriesRequest) {
         log.info("FindSeries.findSeries: " + findSeriesRequest.toString());
         Serie serie = mapper.map(findSeriesRequest, Serie.class);
-        Serie[] lista = searchInfoUseCase.search(serie);
-        FindSeriesResponse response = mapper.mapList(lista, FindSeriesResponse.class);
+        Serie[] list = searchInfoUseCase.search(serie);
+        FindSeriesResponse response = mapper.mapList(list, FindSeriesResponse.class);
         return new ResponseEntity<FindSeriesResponse>(response, HttpStatus.OK);
 
     }

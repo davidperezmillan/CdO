@@ -1,7 +1,8 @@
 package com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax;
 
+import com.davidperezmillan.cdoinfoshowservice.application.converters.PlayMaxSearchMapperImpl;
+import com.davidperezmillan.cdoinfoshowservice.domain.model.Serie;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax.response.info.InfoPlayMaxResponse;
-import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax.response.search.SearchPlayMaxResponse;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 
@@ -16,12 +17,12 @@ public class PlayMaxAdapterFilmTest {
     private PlayMaxAdapter playMaxAdapter;
 
     public PlayMaxAdapterFilmTest() {
-        playMaxAdapter = new PlayMaxAdapter();
+        playMaxAdapter = new PlayMaxAdapter(new PlayMaxSearchMapperImpl());
     }
 
     @Test
     public void search_film_ok() {
-        SearchPlayMaxResponse response = playMaxAdapter.search(searchQuery);
+        Serie[] response = playMaxAdapter.search(searchQuery);
         assertNotNull(response);
     }
 
@@ -37,15 +38,4 @@ public class PlayMaxAdapterFilmTest {
         assertNotNull(response.getResult().getInfo().getId());
     }
 
-    @Test
-    public void search_and_info_film_ok() {
-        SearchPlayMaxResponse response = playMaxAdapter.search(searchQuery);
-        log.debug(response.getResult().getFicha().getFichas().get(0).getTitle());
-        InfoPlayMaxResponse infoResponse = playMaxAdapter
-                .info(response.getResult().getFicha().getFichas().get(0).getId());
-        log.debug("infoResponse: {}", infoResponse);
-        assertEquals(response.getResult().getFicha().getFichas().get(0).getId(),
-                infoResponse.getResult().getInfo().getId());
-
-    }
 }
