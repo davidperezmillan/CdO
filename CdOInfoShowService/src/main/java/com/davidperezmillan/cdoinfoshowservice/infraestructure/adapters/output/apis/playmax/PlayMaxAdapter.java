@@ -1,10 +1,13 @@
 package com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax;
 
+import com.davidperezmillan.cdoinfoshowservice.domain.model.Serie;
+import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax.converter.PlayMaxSearchMapper;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax.response.info.InfoPlayMaxResponse;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax.response.search.SearchPlayMaxResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.net.URI;
@@ -23,16 +26,20 @@ public class PlayMaxAdapter {
 
     private final ObjectMapper objectMapper;
 
-    public PlayMaxAdapter() {
+    private final PlayMaxSearchMapper searchInfoUseCase;
+
+    @Autowired
+    public PlayMaxAdapter(PlayMaxSearchMapper searchInfoUseCase) {
+        this.searchInfoUseCase = searchInfoUseCase;
         this.objectMapper = new ObjectMapper();
     }
 
-    public SearchPlayMaxResponse search(String search) {
+    public Serie[] search(String search) {
         try {
             String url = String.format("https://playmax.mx/api/%s/get/search/v1/%s/%s/?query=%s&sessions=1",
                     RETURN_FORMAT, API_KEY, AUTH_KEY, URLEncoder.encode(search, StandardCharsets.UTF_8.toString()));
             String jsonResponse = get(url);
-            return getSearchPlayMaxResponse(jsonResponse);
+            return searchInfoUseCase.mapList(getSearchPlayMaxResponse(jsonResponse), Serie[].class);
         } catch (Exception e) {
             log.error(e.getMessage());
         }
