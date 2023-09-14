@@ -1,8 +1,8 @@
 package com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax;
 
+import com.davidperezmillan.cdoinfoshowservice.application.converters.PlayMaxInfoMapperImpl;
 import com.davidperezmillan.cdoinfoshowservice.application.converters.PlayMaxSearchMapperImpl;
 import com.davidperezmillan.cdoinfoshowservice.domain.model.serie.Serie;
-import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax.response.info.InfoPlayMaxResponse;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +17,7 @@ public class PlayMaxAdapterFilmTest {
     private final PlayMaxAdapter playMaxAdapter;
 
     public PlayMaxAdapterFilmTest() {
-        playMaxAdapter = new PlayMaxAdapter(new PlayMaxSearchMapperImpl());
+        playMaxAdapter = new PlayMaxAdapter(new PlayMaxSearchMapperImpl(), new PlayMaxInfoMapperImpl());
     }
 
     @Test
@@ -28,14 +28,14 @@ public class PlayMaxAdapterFilmTest {
 
     @Test
     public void info_film_ok() {
-        InfoPlayMaxResponse response = playMaxAdapter.info(id);
+        Serie response = playMaxAdapter.info(id);
         assertNotNull(response);
     }
 
     @Test
     public void info_film_no_null_id() {
-        InfoPlayMaxResponse response = playMaxAdapter.info(id);
-        assertEquals(id, response.getResult().getInfo().getId());
+        Serie response = playMaxAdapter.info(id);
+        assertEquals(id, response.getId());
     }
 
 }

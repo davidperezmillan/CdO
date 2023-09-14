@@ -1,6 +1,7 @@
 package com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax;
 
 import com.davidperezmillan.cdoinfoshowservice.domain.model.serie.Serie;
+import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax.converter.PlayMaxInfoMapper;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax.converter.PlayMaxSearchMapper;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax.response.info.InfoPlayMaxResponse;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax.response.search.SearchPlayMaxResponse;
@@ -26,11 +27,13 @@ public class PlayMaxAdapter {
 
     private final ObjectMapper objectMapper;
 
-    private final PlayMaxSearchMapper searchInfoUseCase;
+    private final PlayMaxSearchMapper playMaxSearchMapper;
+    private final PlayMaxInfoMapper playMaxInfoMapper;
 
     @Autowired
-    public PlayMaxAdapter(PlayMaxSearchMapper searchInfoUseCase) {
-        this.searchInfoUseCase = searchInfoUseCase;
+    public PlayMaxAdapter(PlayMaxSearchMapper playMaxSearchMapper, PlayMaxInfoMapper playMaxInfoMapper) {
+        this.playMaxSearchMapper = playMaxSearchMapper;
+        this.playMaxInfoMapper = playMaxInfoMapper;
         this.objectMapper = new ObjectMapper();
     }
 
@@ -39,19 +42,19 @@ public class PlayMaxAdapter {
             String url = String.format("https://playmax.mx/api/%s/get/search/v1/%s/%s/?query=%s&sessions=1",
                     RETURN_FORMAT, API_KEY, AUTH_KEY, URLEncoder.encode(search, StandardCharsets.UTF_8));
             String jsonResponse = get(url);
-            return searchInfoUseCase.mapList(getSearchPlayMaxResponse(jsonResponse), Serie[].class);
+            return playMaxSearchMapper.mapList(getSearchPlayMaxResponse(jsonResponse), Serie[].class);
         } catch (Exception e) {
             log.error(e.getMessage());
         }
         return null;
     }
 
-    public InfoPlayMaxResponse info(int fichaId) {
+    public Serie info(int fichaId) {
         String url = String.format("https://playmax.mx/api/%s/get/ficha/v1.2/%s/%s/?fichaId=%s", RETURN_FORMAT, API_KEY,
                 AUTH_KEY, fichaId);
         try {
             String jsonResponse = get(url);
-            return getInfoPlayMaxResponse(jsonResponse);
+            return playMaxInfoMapper.map(getInfoPlayMaxResponse(jsonResponse), Serie.class);
         } catch (Exception e) {
             log.error(e.getMessage());
         }
