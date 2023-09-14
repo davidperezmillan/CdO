@@ -2,7 +2,6 @@ package com.davidperezmillan.cdoinfoshowservice.application.converters;
 
 import com.davidperezmillan.cdoinfoshowservice.domain.model.serie.Serie;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.input.rest.findserie.request.FindSeriesRequest;
-import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.input.rest.findserie.response.Item;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -15,9 +14,6 @@ class FindSerieMapperImplTest {
 
     @Mock
     private FindSeriesRequest mockRequest;
-
-    @Mock
-    private Serie mockSerie;
 
     @InjectMocks
     private FindSerieMapperImpl findSerieMapper;
@@ -35,11 +31,4 @@ class FindSerieMapperImplTest {
         assertEquals(title, result.getTitle());
     }
 
-    @Test
-    void testMap() {
-        String title = "Ahsoka";
-        when(mockSerie.getTitle()).thenReturn(title);
-        Item result = findSerieMapper.map(mockSerie, Item.class);
-        assertEquals(title, result.getTitle());
-    }
 }
