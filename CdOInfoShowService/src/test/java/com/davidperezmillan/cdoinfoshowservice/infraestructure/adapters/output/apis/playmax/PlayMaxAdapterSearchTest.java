@@ -9,33 +9,26 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Log4j2
-public class PlayMaxAdapterFilmTest {
+public class PlayMaxAdapterSearchTest {
 
-    private static final String searchQuery = "Blue Beetle";
-    private static final int id = 178593;
+    private static final String searchQuery = "Ahsoka";
 
     private final PlayMaxAdapter playMaxAdapter;
 
-    public PlayMaxAdapterFilmTest() {
+    public PlayMaxAdapterSearchTest() {
         playMaxAdapter = new PlayMaxAdapter(new PlayMaxSearchMapperImpl(), new PlayMaxInfoMapperImpl());
     }
 
     @Test
-    public void search_film_ok() {
+    public void search_serie_ok() {
         Serie[] response = playMaxAdapter.search(searchQuery);
         assertNotNull(response);
     }
 
     @Test
-    public void info_film_ok() {
-        Serie response = playMaxAdapter.info(id);
-        assertNotNull(response);
-    }
-
-    @Test
-    public void info_film_no_null_id() {
-        Serie response = playMaxAdapter.info(id);
-        assertEquals(id, response.getId());
+    public void search_serie_no_found() {
+        Serie[] response = playMaxAdapter.search(null);
+        assertNull(response);
     }
 
 }

@@ -10,6 +10,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @Log4j2
 @RestController
 @RequestMapping("/series")
@@ -28,7 +30,10 @@ public class FindSeriesAdapter {
     @GetMapping(value = "find", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<FindSeriesResponse> findSeries(@RequestParam String search) {
         log.info("FindSeries.findSeries: " + search);
-        return new ResponseEntity<>(mapper.mapList(searchInfoUseCase.search(search), FindSeriesResponse.class),
-                HttpStatus.OK);
+        return Optional.ofNullable(searchInfoUseCase.search(search))
+                .map(searchResponse -> new ResponseEntity<>(mapper.mapList(searchResponse, FindSeriesResponse.class),
+                        HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+
     }
 }
