@@ -26,7 +26,6 @@ public class PlayMaxAdapter {
     private static final String AUTH_KEY = "f948850f8d986d19b6bfdb8f9c32127696c22f5d";
 
     private final ObjectMapper objectMapper;
-
     private final PlayMaxSearchMapper playMaxSearchMapper;
     private final PlayMaxInfoMapper playMaxInfoMapper;
 
@@ -45,8 +44,8 @@ public class PlayMaxAdapter {
             return playMaxSearchMapper.mapList(getSearchPlayMaxResponse(jsonResponse), Serie[].class);
         } catch (Exception e) {
             log.error(e.getMessage());
+            return null;
         }
-        return null;
     }
 
     public Serie info(int fichaId) {
@@ -57,8 +56,9 @@ public class PlayMaxAdapter {
             return playMaxInfoMapper.map(getInfoPlayMaxResponse(jsonResponse), Serie.class);
         } catch (Exception e) {
             log.error(e.getMessage());
+            return null;
         }
-        return null;
+
     }
 
     private InfoPlayMaxResponse getInfoPlayMaxResponse(String jsonResponse) throws JsonProcessingException {

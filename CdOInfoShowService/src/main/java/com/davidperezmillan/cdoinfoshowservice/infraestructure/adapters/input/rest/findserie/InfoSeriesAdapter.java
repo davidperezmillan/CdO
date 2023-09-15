@@ -10,6 +10,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @Log4j2
 @RestController
 @RequestMapping("/info")
@@ -28,6 +30,9 @@ public class InfoSeriesAdapter {
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<InfoSeriesResponse> infoSeries(@PathVariable int id) {
         log.info("InfoSeries.infoSeries: " + id);
-        return new ResponseEntity<>(mapper.map(infoSerieUseCase.get(id), InfoSeriesResponse.class), HttpStatus.OK);
+        return Optional.ofNullable(infoSerieUseCase.get(id))
+                .map(searchResponse -> new ResponseEntity<>(mapper.map(searchResponse, InfoSeriesResponse.class),
+                        HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }

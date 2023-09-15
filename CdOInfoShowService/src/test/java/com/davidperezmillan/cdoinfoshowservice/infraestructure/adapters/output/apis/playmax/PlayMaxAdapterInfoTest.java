@@ -9,21 +9,12 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Log4j2
-public class PlayMaxAdapterTest {
+public class PlayMaxAdapterInfoTest {
 
-    private static final String searchQuery = "Ahsoka";
-    private static final int id = 135591;
-
+    private static final int id = 178593;
     private final PlayMaxAdapter playMaxAdapter;
-
-    public PlayMaxAdapterTest() {
+    public PlayMaxAdapterInfoTest() {
         playMaxAdapter = new PlayMaxAdapter(new PlayMaxSearchMapperImpl(), new PlayMaxInfoMapperImpl());
-    }
-
-    @Test
-    public void search_serie_ok() {
-        Serie[] response = playMaxAdapter.search(searchQuery);
-        assertNotNull(response);
     }
 
     @Test
@@ -33,9 +24,15 @@ public class PlayMaxAdapterTest {
     }
 
     @Test
-    public void info_serie_no_null_id() {
+    public void info_film_no_null_id() {
         Serie response = playMaxAdapter.info(id);
         assertEquals(id, response.getId());
+    }
+
+    @Test
+    public void info_serie_no_found() {
+        Serie response = playMaxAdapter.info(0);
+        assertNull(response);
     }
 
 }
