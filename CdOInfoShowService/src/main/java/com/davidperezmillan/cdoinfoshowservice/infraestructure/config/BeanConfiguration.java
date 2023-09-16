@@ -4,7 +4,6 @@ import com.davidperezmillan.cdoinfoshowservice.application.converters.*;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.input.rest.findserie.converter.FindSerieMapper;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.input.rest.findserie.converter.InfoSerieMapper;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.input.rest.keepalive.converter.KeepAliveMapper;
-
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax.converter.PlayMaxInfoMapper;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax.converter.PlayMaxSearchMapper;
 import org.springframework.context.annotation.Bean;
@@ -37,5 +36,7 @@ public class BeanConfiguration {
     public PlayMaxInfoMapper PlayMaxInfoMapper() {
         return new PlayMaxInfoMapperImpl();
     }
+
+
 
 }
