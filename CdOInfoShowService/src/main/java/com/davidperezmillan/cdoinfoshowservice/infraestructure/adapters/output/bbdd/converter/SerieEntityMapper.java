@@ -16,6 +16,7 @@ public class SerieEntityMapper {
             protected void configure() {
                 map().setId((long) source.getId());
                 map().setReleaseYear(source.getInfo().getYear());
+                map().setSinopsis(source.getInfo().getSinopsis());
             }
         });
 
@@ -29,6 +30,7 @@ public class SerieEntityMapper {
             protected void configure() {
                 map().setId(source.getId().intValue());
                 map().getInfo().setYear(source.getReleaseYear());
+                map().getInfo().setSinopsis(source.getSinopsis());
             }
         });
         return modelMapper;
