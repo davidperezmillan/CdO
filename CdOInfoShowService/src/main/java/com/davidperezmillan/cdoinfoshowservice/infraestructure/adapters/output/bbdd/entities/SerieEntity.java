@@ -1,12 +1,12 @@
-package com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.bbdd.models;
+package com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.bbdd.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
 
-@Entity(name = "SERIES")
-@Table(name = "SERIES")
+@Entity
+@Table(name = "series")
 @Data
-public class SerieDAO {
+public class SerieEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

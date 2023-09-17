@@ -1,10 +1,10 @@
 package com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.bbdd.repositiories;
 
-import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.bbdd.models.SerieDAO;
+import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.bbdd.entities.SerieEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface SerieRepository extends JpaRepository<SerieDAO, Long> {
+@Repository
+public interface SerieRepository extends JpaRepository<SerieEntity, Long> {
 
 }
-
-
