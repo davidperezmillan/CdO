@@ -13,6 +13,7 @@ public class PlayMaxAdapterInfoTest {
 
     private static final int id = 178593;
     private final PlayMaxAdapter playMaxAdapter;
+
     public PlayMaxAdapterInfoTest() {
         playMaxAdapter = new PlayMaxAdapter(new PlayMaxSearchMapperImpl(), new PlayMaxInfoMapperImpl());
     }
