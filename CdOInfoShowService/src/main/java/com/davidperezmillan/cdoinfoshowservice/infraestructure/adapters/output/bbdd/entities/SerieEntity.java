@@ -17,6 +17,9 @@ public class SerieEntity {
     @Column(name = "releaseyear")
     private int releaseYear;
 
+    @Column(name = "sinopsis")
+    private String sinopsis;
+
     // Otros campos y relaciones aquí
 
 }
