@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Info {
 
-    private String sinopsis;
+    private String synopsis;
     private int year;
     private double rating;
 }

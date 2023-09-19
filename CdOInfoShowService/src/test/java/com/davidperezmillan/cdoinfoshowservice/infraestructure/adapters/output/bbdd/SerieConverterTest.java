@@ -18,7 +18,7 @@ public class SerieConverterTest {
         serie.setTitle("Ahsoka");
         Info info = new Info();
         info.setYear(2021);
-        info.setSinopsis("Ejemplo de sinopsis");
+        info.setSynopsis("Ejemplo de sinopsis");
         serie.setInfo(info);
 
         ModelMapper modelMapper = SerieEntityMapper.toSerieEntity();
@@ -27,7 +27,7 @@ public class SerieConverterTest {
         assertEquals(serie.getId(), serieEntity.getId());
         assertEquals(serie.getTitle(), serieEntity.getTitle());
         assertEquals(serie.getInfo().getYear(), serieEntity.getReleaseYear());
-        assertEquals(serie.getInfo().getSinopsis(), serieEntity.getSinopsis());
+        assertEquals(serie.getInfo().getSynopsis(), serieEntity.getSinopsis());
 
     }
 
@@ -45,6 +45,6 @@ public class SerieConverterTest {
         assertEquals(serieEntity.getId(), serie.getId());
         assertEquals(serieEntity.getTitle(), serie.getTitle());
         assertEquals(serieEntity.getReleaseYear(), serie.getInfo().getYear());
-        assertEquals(serieEntity.getSinopsis(), serie.getInfo().getSinopsis());
+        assertEquals(serieEntity.getSinopsis(), serie.getInfo().getSynopsis());
     }
 }

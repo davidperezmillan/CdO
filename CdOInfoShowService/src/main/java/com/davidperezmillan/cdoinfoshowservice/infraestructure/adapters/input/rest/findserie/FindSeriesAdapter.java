@@ -1,7 +1,7 @@
 package com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.input.rest.findserie;
 
 import com.davidperezmillan.cdoinfoshowservice.application.usecases.SearchInfoUseCase;
-import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.input.rest.findserie.converter.FindSerieMapper;
+import com.davidperezmillan.cdoinfoshowservice.application.converters.FindSeriesRequestMapper;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.input.rest.findserie.response.FindSeriesResponse;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +18,10 @@ import java.util.Optional;
 public class FindSeriesAdapter {
 
     private final SearchInfoUseCase searchInfoUseCase;
-    private final FindSerieMapper mapper;
 
     @Autowired
-    public FindSeriesAdapter(SearchInfoUseCase searchInfoUseCase, FindSerieMapper mapper) {
+    public FindSeriesAdapter(SearchInfoUseCase searchInfoUseCase) {
         this.searchInfoUseCase = searchInfoUseCase;
-        this.mapper = mapper;
     }
 
     @CrossOrigin(origins = "http://localhost")
@@ -31,7 +29,8 @@ public class FindSeriesAdapter {
     public ResponseEntity<FindSeriesResponse> findSeries(@RequestParam String search) {
         log.info("FindSeries.findSeries: " + search);
         return Optional.ofNullable(searchInfoUseCase.search(search))
-                .map(searchResponse -> new ResponseEntity<>(mapper.mapList(searchResponse, FindSeriesResponse.class),
+                .map(searchResponse -> new ResponseEntity<>(
+                        FindSeriesRequestMapper.toSerieFind().map(searchResponse, FindSeriesResponse.class),
                         HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
 

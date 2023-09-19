@@ -15,7 +15,7 @@ public class InfoSerieMapperImpl implements InfoSerieMapper {
 
         Info info = new Info();
         serie.setInfo(info);
-        info.setSinopsis(source.getSinopsis());
+        info.setSynopsis(source.getSinopsis());
         info.setYear(source.getYear());
         info.setRating(source.getRating());
         return serie;
@@ -27,7 +27,7 @@ public class InfoSerieMapperImpl implements InfoSerieMapper {
         infoSeriesResponse.setId(source.getId());
         infoSeriesResponse.setTitle(source.getTitle());
         infoSeriesResponse.setPoster(source.getPoster());
-        infoSeriesResponse.setSinopsis(source.getInfo().getSinopsis());
+        infoSeriesResponse.setSinopsis(source.getInfo().getSynopsis());
         infoSeriesResponse.setYear(source.getInfo().getYear());
         infoSeriesResponse.setRating(source.getInfo().getRating());
 

@@ -17,7 +17,7 @@ public class PlayMaxInfoMapperImpl implements PlayMaxInfoMapper {
         Info info = new Info();
         info.setYear(source.getResult().getInfo().getYear());
         info.setRating(source.getResult().getInfo().getRating());
-        info.setSinopsis(source.getResult().getInfo().getSinopsis());
+        info.setSynopsis(source.getResult().getInfo().getSinopsis());
         s.setInfo(info);
         return s;
     }
