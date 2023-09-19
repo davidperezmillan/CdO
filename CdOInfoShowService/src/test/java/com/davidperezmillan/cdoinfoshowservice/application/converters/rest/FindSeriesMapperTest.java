@@ -1,6 +1,5 @@
-package com.davidperezmillan.cdoinfoshowservice.application.converters;
+package com.davidperezmillan.cdoinfoshowservice.application.converters.rest;
 
-import com.davidperezmillan.cdoinfoshowservice.application.converters.rest.FindSeriesMapper;
 import com.davidperezmillan.cdoinfoshowservice.domain.model.serie.Serie;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.input.rest.findserie.request.FindSeriesRequest;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.input.rest.findserie.response.FindSeriesResponse;

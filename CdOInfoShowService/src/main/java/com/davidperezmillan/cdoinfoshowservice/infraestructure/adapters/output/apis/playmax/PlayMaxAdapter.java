@@ -1,8 +1,8 @@
 package com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax;
 
+import com.davidperezmillan.cdoinfoshowservice.application.converters.playmax.PlayMaxInfoMapper;
+import com.davidperezmillan.cdoinfoshowservice.application.converters.playmax.PlayMaxSearchMapper;
 import com.davidperezmillan.cdoinfoshowservice.domain.model.serie.Serie;
-import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax.converter.PlayMaxInfoMapper;
-import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax.converter.PlayMaxSearchMapper;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax.response.info.InfoPlayMaxResponse;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax.response.search.SearchPlayMaxResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -17,6 +17,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 @Log4j2
 public class PlayMaxAdapter {
@@ -26,13 +27,9 @@ public class PlayMaxAdapter {
     private static final String AUTH_KEY = "f948850f8d986d19b6bfdb8f9c32127696c22f5d";
 
     private final ObjectMapper objectMapper;
-    private final PlayMaxSearchMapper playMaxSearchMapper;
-    private final PlayMaxInfoMapper playMaxInfoMapper;
 
     @Autowired
-    public PlayMaxAdapter(PlayMaxSearchMapper playMaxSearchMapper, PlayMaxInfoMapper playMaxInfoMapper) {
-        this.playMaxSearchMapper = playMaxSearchMapper;
-        this.playMaxInfoMapper = playMaxInfoMapper;
+    public PlayMaxAdapter() {
         this.objectMapper = new ObjectMapper();
     }
 
@@ -41,7 +38,7 @@ public class PlayMaxAdapter {
             String url = String.format("https://playmax.mx/api/%s/get/search/v1/%s/%s/?query=%s&sessions=1",
                     RETURN_FORMAT, API_KEY, AUTH_KEY, URLEncoder.encode(search, StandardCharsets.UTF_8));
             String jsonResponse = get(url);
-            return playMaxSearchMapper.mapList(getSearchPlayMaxResponse(jsonResponse), Serie[].class);
+            return PlayMaxSearchMapper.mapList(Objects.requireNonNull(getSearchPlayMaxResponse(jsonResponse)));
         } catch (Exception e) {
             log.error(e.getMessage());
             return null;
@@ -53,7 +50,7 @@ public class PlayMaxAdapter {
                 AUTH_KEY, fichaId);
         try {
             String jsonResponse = get(url);
-            return playMaxInfoMapper.map(getInfoPlayMaxResponse(jsonResponse), Serie.class);
+            return PlayMaxInfoMapper.toSerie(Objects.requireNonNull(getInfoPlayMaxResponse(jsonResponse)));
         } catch (Exception e) {
             log.error(e.getMessage());
             return null;

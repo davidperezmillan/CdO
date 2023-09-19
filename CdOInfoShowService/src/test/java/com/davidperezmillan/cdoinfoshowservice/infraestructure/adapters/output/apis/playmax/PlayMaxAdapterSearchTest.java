@@ -1,12 +1,11 @@
 package com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax;
 
-import com.davidperezmillan.cdoinfoshowservice.application.converters.PlayMaxInfoMapperImpl;
-import com.davidperezmillan.cdoinfoshowservice.application.converters.PlayMaxSearchMapperImpl;
 import com.davidperezmillan.cdoinfoshowservice.domain.model.serie.Serie;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @Log4j2
 public class PlayMaxAdapterSearchTest {
@@ -16,7 +15,7 @@ public class PlayMaxAdapterSearchTest {
     private final PlayMaxAdapter playMaxAdapter;
 
     public PlayMaxAdapterSearchTest() {
-        playMaxAdapter = new PlayMaxAdapter(new PlayMaxSearchMapperImpl(), new PlayMaxInfoMapperImpl());
+        playMaxAdapter = new PlayMaxAdapter();
     }
 
     @Test
