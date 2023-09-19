@@ -1,5 +1,6 @@
 package com.davidperezmillan.cdoinfoshowservice.application.converters;
 
+import com.davidperezmillan.cdoinfoshowservice.application.converters.rest.FindSeriesMapper;
 import com.davidperezmillan.cdoinfoshowservice.domain.model.serie.Serie;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.input.rest.findserie.request.FindSeriesRequest;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.input.rest.findserie.response.FindSeriesResponse;
@@ -7,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class FindSeriesRequestMapperTest {
+public class FindSeriesMapperTest {
 
     @Test
     public void testToSerie() {
@@ -16,7 +17,7 @@ public class FindSeriesRequestMapperTest {
         request.setTitle("Nombre de prueba");
 
         // Act
-        Serie serie = FindSeriesRequestMapper.toSerieFind().map(request, Serie.class);
+        Serie serie = FindSeriesMapper.toSerieFind(request);
 
         // Assert
         assertEquals(request.getTitle(), serie.getTitle());
@@ -33,7 +34,7 @@ public class FindSeriesRequestMapperTest {
         // Agrega más series aquí según sea necesario
 
         // Act
-        FindSeriesResponse response = FindSeriesRequestMapper.mapToFindSeriesResponse(series);
+        FindSeriesResponse response = FindSeriesMapper.mapToFindSeriesResponse(series);
 
         // Assert
         assertEquals(series.length, response.getItems().length);

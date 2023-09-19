@@ -2,7 +2,7 @@ package com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.
 
 import com.davidperezmillan.cdoinfoshowservice.domain.model.serie.Info;
 import com.davidperezmillan.cdoinfoshowservice.domain.model.serie.Serie;
-import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.bbdd.converter.SerieEntityMapper;
+import com.davidperezmillan.cdoinfoshowservice.application.converters.SerieEntityMapper;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.bbdd.entities.SerieEntity;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;

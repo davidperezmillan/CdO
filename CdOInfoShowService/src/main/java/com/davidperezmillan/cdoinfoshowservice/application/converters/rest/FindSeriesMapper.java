@@ -1,4 +1,4 @@
-package com.davidperezmillan.cdoinfoshowservice.application.converters;
+package com.davidperezmillan.cdoinfoshowservice.application.converters.rest;
 
 import com.davidperezmillan.cdoinfoshowservice.domain.model.serie.Serie;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.input.rest.findserie.request.FindSeriesRequest;
@@ -8,9 +8,9 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.modelmapper.TypeToken;
 
-public interface FindSeriesRequestMapper {
+public interface FindSeriesMapper {
 
-    static ModelMapper toSerieFind() {
+    static Serie toSerieFind(FindSeriesRequest source) {
         ModelMapper modelMapper = new ModelMapper();
 
         modelMapper.addMappings(new PropertyMap<FindSeriesRequest, Serie>() {
@@ -20,7 +20,7 @@ public interface FindSeriesRequestMapper {
             }
         });
 
-        return modelMapper;
+        return modelMapper.map(source, Serie.class);
     }
 
     static FindSeriesResponse mapToFindSeriesResponse(Serie[] series) {

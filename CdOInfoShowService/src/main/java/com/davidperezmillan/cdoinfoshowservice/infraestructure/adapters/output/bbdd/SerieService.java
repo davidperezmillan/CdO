@@ -1,7 +1,7 @@
 package com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.bbdd;
 
 import com.davidperezmillan.cdoinfoshowservice.domain.model.serie.Serie;
-import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.bbdd.converter.SerieEntityMapper;
+import com.davidperezmillan.cdoinfoshowservice.application.converters.SerieEntityMapper;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.bbdd.entities.SerieEntity;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.bbdd.repositiories.SerieRepository;
 import org.springframework.beans.factory.annotation.Autowired;

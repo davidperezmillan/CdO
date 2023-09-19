@@ -1,4 +1,4 @@
-package com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.bbdd.converter;
+package com.davidperezmillan.cdoinfoshowservice.application.converters;
 
 import com.davidperezmillan.cdoinfoshowservice.domain.model.serie.Serie;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.bbdd.entities.SerieEntity;

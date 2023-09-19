@@ -1,7 +1,7 @@
 package com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.input.rest.findserie;
 
+import com.davidperezmillan.cdoinfoshowservice.application.converters.rest.InfoSerieMapper;
 import com.davidperezmillan.cdoinfoshowservice.application.usecases.InfoSerieUseCase;
-import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.input.rest.findserie.converter.InfoSerieMapper;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.input.rest.findserie.response.InfoSeriesResponse;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +18,10 @@ import java.util.Optional;
 public class InfoSeriesAdapter {
 
     private final InfoSerieUseCase infoSerieUseCase;
-    private final InfoSerieMapper mapper;
 
     @Autowired
-    public InfoSeriesAdapter(InfoSerieUseCase infoSerieUseCase, InfoSerieMapper mapper) {
+    public InfoSeriesAdapter(InfoSerieUseCase infoSerieUseCase) {
         this.infoSerieUseCase = infoSerieUseCase;
-        this.mapper = mapper;
     }
 
     @CrossOrigin(origins = "http://localhost")
@@ -31,7 +29,7 @@ public class InfoSeriesAdapter {
     public ResponseEntity<InfoSeriesResponse> infoSeries(@PathVariable int id) {
         log.info("InfoSeries.infoSeries: " + id);
         return Optional.ofNullable(infoSerieUseCase.get(id))
-                .map(searchResponse -> new ResponseEntity<>(mapper.map(searchResponse, InfoSeriesResponse.class),
+                .map(searchResponse -> new ResponseEntity<>(InfoSerieMapper.mapToInfoSeriesResponse(searchResponse),
                         HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
