@@ -1,4 +1,4 @@
-package com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.bbdd.converter;
+package com.davidperezmillan.cdoinfoshowservice.application.converters;
 
 import com.davidperezmillan.cdoinfoshowservice.domain.model.serie.Serie;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.bbdd.entities.SerieEntity;
@@ -16,7 +16,7 @@ public class SerieEntityMapper {
             protected void configure() {
                 map().setId((long) source.getId());
                 map().setReleaseYear(source.getInfo().getYear());
-                map().setSinopsis(source.getInfo().getSinopsis());
+                map().setSinopsis(source.getInfo().getSynopsis());
             }
         });
 
@@ -30,7 +30,7 @@ public class SerieEntityMapper {
             protected void configure() {
                 map().setId(source.getId().intValue());
                 map().getInfo().setYear(source.getReleaseYear());
-                map().getInfo().setSinopsis(source.getSinopsis());
+                map().getInfo().setSynopsis(source.getSinopsis());
             }
         });
         return modelMapper;

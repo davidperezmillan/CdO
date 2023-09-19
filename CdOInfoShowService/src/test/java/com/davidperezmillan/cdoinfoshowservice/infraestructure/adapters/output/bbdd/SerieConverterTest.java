@@ -2,7 +2,7 @@ package com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.
 
 import com.davidperezmillan.cdoinfoshowservice.domain.model.serie.Info;
 import com.davidperezmillan.cdoinfoshowservice.domain.model.serie.Serie;
-import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.bbdd.converter.SerieEntityMapper;
+import com.davidperezmillan.cdoinfoshowservice.application.converters.SerieEntityMapper;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.bbdd.entities.SerieEntity;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
@@ -18,7 +18,7 @@ public class SerieConverterTest {
         serie.setTitle("Ahsoka");
         Info info = new Info();
         info.setYear(2021);
-        info.setSinopsis("Ejemplo de sinopsis");
+        info.setSynopsis("Ejemplo de sinopsis");
         serie.setInfo(info);
 
         ModelMapper modelMapper = SerieEntityMapper.toSerieEntity();
@@ -27,7 +27,7 @@ public class SerieConverterTest {
         assertEquals(serie.getId(), serieEntity.getId());
         assertEquals(serie.getTitle(), serieEntity.getTitle());
         assertEquals(serie.getInfo().getYear(), serieEntity.getReleaseYear());
-        assertEquals(serie.getInfo().getSinopsis(), serieEntity.getSinopsis());
+        assertEquals(serie.getInfo().getSynopsis(), serieEntity.getSinopsis());
 
     }
 
@@ -45,6 +45,6 @@ public class SerieConverterTest {
         assertEquals(serieEntity.getId(), serie.getId());
         assertEquals(serieEntity.getTitle(), serie.getTitle());
         assertEquals(serieEntity.getReleaseYear(), serie.getInfo().getYear());
-        assertEquals(serieEntity.getSinopsis(), serie.getInfo().getSinopsis());
+        assertEquals(serieEntity.getSinopsis(), serie.getInfo().getSynopsis());
     }
 }
