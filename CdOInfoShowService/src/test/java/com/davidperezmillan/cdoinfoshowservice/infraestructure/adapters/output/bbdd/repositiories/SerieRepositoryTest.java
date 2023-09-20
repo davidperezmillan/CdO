@@ -1,7 +1,6 @@
-package com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.bbdd;
+package com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.bbdd.repositiories;
 
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.bbdd.entities.SerieEntity;
-import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.bbdd.repositiories.SerieRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,16 +18,18 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class SerieRepositoryTest {
 
     @Autowired
-    private SerieRepository serieRepository;
+    SerieRepository serieRepository;
 
     @BeforeEach
     public void setUp() {
         // Agregar datos de prueba antes de cada prueba si es necesario
         SerieEntity serie1 = new SerieEntity();
+        serie1.setId(1L);
         serie1.setTitle("Serie 1");
         serieRepository.save(serie1);
 
         SerieEntity serie2 = new SerieEntity();
+        serie2.setId(2L);
         serie2.setTitle("Serie 2");
         serieRepository.save(serie2);
     }
@@ -49,6 +50,7 @@ public class SerieRepositoryTest {
     @Test
     public void testSave() {
         SerieEntity serie3 = new SerieEntity();
+        serie3.setId(3L);
         serie3.setTitle("Serie 3");
         SerieEntity savedSerie = serieRepository.save(serie3);
 

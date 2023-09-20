@@ -1,14 +1,19 @@
 package com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.bbdd.entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Data;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @Table(name = "series")
+@DynamicUpdate
 @Data
 public class SerieEntity {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "title")
@@ -20,6 +25,7 @@ public class SerieEntity {
     @Column(name = "sinopsis")
     private String sinopsis;
 
-    // Otros campos y relaciones aquí
+    @Column(name = "visto", updatable = false)
+    private boolean visto;
 
 }

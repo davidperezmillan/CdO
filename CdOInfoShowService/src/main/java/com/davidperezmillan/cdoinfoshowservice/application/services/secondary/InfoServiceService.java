@@ -1,5 +1,6 @@
 package com.davidperezmillan.cdoinfoshowservice.application.services.secondary;
 
+import com.davidperezmillan.cdoinfoshowservice.application.converters.bbdd.SerieMapper;
 import com.davidperezmillan.cdoinfoshowservice.domain.model.serie.Serie;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax.PlayMaxAdapter;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.bbdd.SerieService;
@@ -17,8 +18,8 @@ public class InfoServiceService {
     }
 
     public Serie get(int id) {
-        Serie item = playMaxAdapter.info(id);
-        serieService.createSerie(item);
-        return item;
+        Serie serie = playMaxAdapter.info(id);
+        serieService.createSerie(SerieMapper.toSerieEntityRequest(serie));
+        return serie;
     }
 }
