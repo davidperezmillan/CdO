@@ -1,17 +1,18 @@
-package com.davidperezmillan.cdoinfoshowservice.application.converters;
+package com.davidperezmillan.cdoinfoshowservice.application.converters.bbdd;
 
 import com.davidperezmillan.cdoinfoshowservice.domain.model.serie.Serie;
-import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.bbdd.entities.SerieEntity;
+import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.bbdd.request.SerieEntityRequest;
+import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.bbdd.response.SerieEntityResponse;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 
-public class SerieEntityMapper {
+public class SerieMapper {
 
-    public static ModelMapper toSerieEntity() {
+    public static SerieEntityRequest toSerieEntityRequest(Serie serie) {
         ModelMapper modelMapper = new ModelMapper();
 
         // Configura un mapeo personalizado para la clase PersonaDTO
-        modelMapper.addMappings(new PropertyMap<Serie, SerieEntity>() {
+        modelMapper.addMappings(new PropertyMap<Serie, SerieEntityRequest>() {
             @Override
             protected void configure() {
                 map().setId((long) source.getId());
@@ -20,12 +21,14 @@ public class SerieEntityMapper {
             }
         });
 
-        return modelMapper;
+        return modelMapper.map(serie, SerieEntityRequest.class);
     }
 
-    public static ModelMapper toSerie() {
+    public static Serie toSerie(SerieEntityResponse serieEntityResponse) {
         ModelMapper modelMapper = new ModelMapper();
-        modelMapper.addMappings(new PropertyMap<SerieEntity, Serie>() {
+
+        // Configura un mapeo personalizado para la clase PersonaDTO
+        modelMapper.addMappings(new PropertyMap<SerieEntityResponse, Serie>() {
             @Override
             protected void configure() {
                 map().setId(source.getId().intValue());
@@ -33,7 +36,7 @@ public class SerieEntityMapper {
                 map().getInfo().setSynopsis(source.getSinopsis());
             }
         });
-        return modelMapper;
 
+        return modelMapper.map(serieEntityResponse, Serie.class);
     }
 }

@@ -1,15 +1,16 @@
 package com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.bbdd;
 
-import com.davidperezmillan.cdoinfoshowservice.domain.model.serie.Info;
-import com.davidperezmillan.cdoinfoshowservice.domain.model.serie.Serie;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.bbdd.entities.SerieEntity;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.bbdd.repositiories.SerieRepository;
+import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.bbdd.request.SerieEntityRequest;
+import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.bbdd.response.SerieEntityResponse;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -21,44 +22,29 @@ public class SerieServiceTest {
     @Autowired
     SerieService serieService;
 
-    @Test
-    public void testCreateSerie() {
-        // Configurar el comportamiento del mock
-        SerieEntity SerieEntity = new SerieEntity();
-        SerieEntity.setTitle("Example Title");
-        SerieEntity.setId(1L);
-        SerieEntity.setReleaseYear(2021);
-        when(serieRepository.save(SerieEntity)).thenReturn(SerieEntity);
-
-        Serie serie = new Serie();
-        serie.setTitle(SerieEntity.getTitle());
-        serie.setId(1);
-        Info info = new Info();
-        info.setYear(2021);
-        serie.setInfo(info);
-
-        // Llamar al método que queremos probar
-        Serie serieSalved = serieService.createSerie(serie);
-
-        assertEquals(SerieEntity.getTitle(), serieSalved.getTitle());
-        assertEquals(SerieEntity.getId(), serieSalved.getId());
-        assertEquals(SerieEntity.getReleaseYear(), serieSalved.getInfo().getYear());
+    public SerieServiceTest() {
+        serieService = new SerieService();
     }
 
     @Test
-    public void testGetSerieById() {
-        // Configurar el comportamiento del mock
-        SerieEntity SerieEntity = new SerieEntity();
-        SerieEntity.setId(1L);
-        SerieEntity.setTitle("Example Title");
+    void createSerie() {
+        SerieEntity serieEntity = new SerieEntity();
+        serieEntity.setId(1L);
+        serieEntity.setTitle("Ahsoka");
+        serieEntity.setReleaseYear(2021);
+        when(serieRepository.save(any(SerieEntity.class))).thenReturn(serieEntity);
 
-        when(serieRepository.findById(1L)).thenReturn(java.util.Optional.of(SerieEntity));
+        SerieEntityRequest serieEntityRequest = new SerieEntityRequest();
+        serieEntityRequest.setId(1L);
+        serieEntityRequest.setTitle("Ahsoka");
+        serieEntityRequest.setReleaseYear(2021);
 
-        // Llamar al método que queremos probar
-        Serie resultSerie = serieService.getSerieById(1);
+        SerieEntityResponse serieEntityResponse = serieService.createSerie(serieEntityRequest);
 
-        // Verificar el resultado
-        assertEquals(SerieEntity.getTitle(), resultSerie.getTitle());
+        assertEquals(serieEntityRequest.getId(), serieEntityResponse.getId());
+        assertEquals(serieEntityRequest.getTitle(), serieEntityResponse.getTitle());
+        assertEquals(serieEntityRequest.getReleaseYear(), serieEntityResponse.getReleaseYear());
+
     }
 
 }
