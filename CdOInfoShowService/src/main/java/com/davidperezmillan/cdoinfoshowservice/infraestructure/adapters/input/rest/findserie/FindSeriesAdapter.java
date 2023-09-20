@@ -26,9 +26,10 @@ public class FindSeriesAdapter {
 
     @CrossOrigin(origins = "http://localhost")
     @GetMapping(value = "find", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<FindSeriesResponse> findSeries(@RequestParam String search) {
+    public ResponseEntity<FindSeriesResponse> findSeries(@RequestParam String search,
+            @RequestParam(required = false) boolean isSerie) {
         log.info("FindSeries.findSeries: " + search);
-        return Optional.ofNullable(searchInfoUseCase.search(search))
+        return Optional.ofNullable(searchInfoUseCase.search(search, isSerie))
                 .map(series -> new ResponseEntity<>(FindSeriesMapper.mapToFindSeriesResponse(series), HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
 
