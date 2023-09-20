@@ -4,8 +4,6 @@ import com.davidperezmillan.cdoinfoshowservice.domain.model.serie.Serie;
 
 public interface SearchInfoUseCase {
 
-    Serie[] search(Serie search);
-
-    Serie[] search(String search);
+    Serie[] search(String search, boolean isSerie);
 
 }
