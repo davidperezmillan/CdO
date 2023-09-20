@@ -1,6 +1,6 @@
 package com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax;
 
-import com.davidperezmillan.cdoinfoshowservice.domain.model.serie.Serie;
+import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax.response.search.SearchPlayMaxResponse;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 
@@ -20,13 +20,13 @@ public class PlayMaxAdapterSearchTest {
 
     @Test
     public void search_serie_ok() {
-        Serie[] response = playMaxAdapter.search(searchQuery);
+        SearchPlayMaxResponse response = playMaxAdapter.search(searchQuery);
         assertNotNull(response);
     }
 
     @Test
     public void search_serie_no_found() {
-        Serie[] response = playMaxAdapter.search(null);
+        SearchPlayMaxResponse response = playMaxAdapter.search(null);
         assertNull(response);
     }
 

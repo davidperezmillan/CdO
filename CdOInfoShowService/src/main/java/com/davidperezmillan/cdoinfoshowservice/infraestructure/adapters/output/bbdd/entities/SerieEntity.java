@@ -1,9 +1,6 @@
 package com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.bbdd.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -23,6 +20,7 @@ public class SerieEntity {
     private int releaseYear;
 
     @Column(name = "sinopsis")
+    @Lob
     private String sinopsis;
 
     @Column(name = "visto", updatable = false)

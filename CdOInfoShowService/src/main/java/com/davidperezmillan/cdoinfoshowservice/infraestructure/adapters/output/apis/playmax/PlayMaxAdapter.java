@@ -1,8 +1,5 @@
 package com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax;
 
-import com.davidperezmillan.cdoinfoshowservice.application.converters.playmax.PlayMaxInfoMapper;
-import com.davidperezmillan.cdoinfoshowservice.application.converters.playmax.PlayMaxSearchMapper;
-import com.davidperezmillan.cdoinfoshowservice.domain.model.serie.Serie;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax.response.info.InfoPlayMaxResponse;
 import com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax.response.search.SearchPlayMaxResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -33,24 +30,24 @@ public class PlayMaxAdapter {
         this.objectMapper = new ObjectMapper();
     }
 
-    public Serie[] search(String search) {
+    public SearchPlayMaxResponse search(String search) {
         try {
             String url = String.format("https://playmax.mx/api/%s/get/search/v1/%s/%s/?query=%s&sessions=1",
                     RETURN_FORMAT, API_KEY, AUTH_KEY, URLEncoder.encode(search, StandardCharsets.UTF_8));
             String jsonResponse = get(url);
-            return PlayMaxSearchMapper.mapList(Objects.requireNonNull(getSearchPlayMaxResponse(jsonResponse)));
+            return Objects.requireNonNull(getSearchPlayMaxResponse(jsonResponse));
         } catch (Exception e) {
             log.error(e.getMessage());
             return null;
         }
     }
 
-    public Serie info(int fichaId) {
+    public InfoPlayMaxResponse info(int fichaId) {
         String url = String.format("https://playmax.mx/api/%s/get/ficha/v1.2/%s/%s/?fichaId=%s", RETURN_FORMAT, API_KEY,
                 AUTH_KEY, fichaId);
         try {
             String jsonResponse = get(url);
-            return PlayMaxInfoMapper.toSerie(Objects.requireNonNull(getInfoPlayMaxResponse(jsonResponse)));
+            return Objects.requireNonNull(getInfoPlayMaxResponse(jsonResponse));
         } catch (Exception e) {
             log.error(e.getMessage());
             return null;
