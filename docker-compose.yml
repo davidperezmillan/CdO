@@ -19,6 +19,9 @@ services:
       environment:
         MYSQL_ROOT_PASSWORD: root
         MYSQL_DATABASE: CdO
+      volumes:
+        - ./mariadb/config:/config
+        - ./mariadb/data:/data
       ports:
         - "3306:3306" # Mapear el puerto 3306 del contenedor al puerto 3306 del host
       networks:
