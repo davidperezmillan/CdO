@@ -24,7 +24,7 @@ public class InfoSeriesAdapter {
         this.infoSerieUseCase = infoSerieUseCase;
     }
 
-    @CrossOrigin(origins = "http://localhost")
+
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<InfoSeriesResponse> infoSeries(@PathVariable int id) {
         log.info("InfoSeries.infoSeries: " + id);

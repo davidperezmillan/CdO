@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 @Log4j2
 public class PlayMaxAdapterSearchTest {
 
-    private static final String searchQuery = "Ahsoka";
+    private static final String searchQuery = "Obi";
 
     private final PlayMaxAdapter playMaxAdapter;
 

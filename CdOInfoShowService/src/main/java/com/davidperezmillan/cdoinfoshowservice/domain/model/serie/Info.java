@@ -14,4 +14,5 @@ public class Info {
     private String synopsis;
     private int year;
     private double rating;
+    private String status;
 }

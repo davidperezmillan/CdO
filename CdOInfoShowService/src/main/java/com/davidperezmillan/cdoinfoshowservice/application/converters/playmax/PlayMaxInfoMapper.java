@@ -20,7 +20,8 @@ public interface PlayMaxInfoMapper {
                 com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax.response.info.Info.class,
                 Info.class).addMappings(mapper -> mapper.map(src -> src.getYear(), Info::setYear))
                 .addMappings(mapper -> mapper.map(src -> src.getRating(), Info::setRating))
-                .addMappings(mapper -> mapper.map(src -> src.getSinopsis(), Info::setSynopsis));
+                .addMappings(mapper -> mapper.map(src -> src.getSinopsis(), Info::setSynopsis))
+                .addMappings(mapper -> mapper.map(src -> src.getStatus(), Info::setStatus));
 
         com.davidperezmillan.cdoinfoshowservice.infraestructure.adapters.output.apis.playmax.response.info.Info infoSource = source
                 .getResult().getInfo();

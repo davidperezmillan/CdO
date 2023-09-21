@@ -23,4 +23,7 @@ public class InfoSeriesResponse {
 
     @JsonProperty("year")
     private int year;
+
+    @JsonProperty("status")
+    private String status;
 }
