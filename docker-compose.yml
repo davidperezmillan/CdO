@@ -9,6 +9,23 @@ services:
     ports:
       - "8080:8080"  # Mapea el puerto del contenedor al puerto del host
     container_name: Info_Show # Nombre del contenedor
+    networks:
+      - CdO_network # Conecta el contenedor a la red CdO_Network  
+
+
+  mariadb:
+      image: mariadb:latest
+      container_name: mariadb_container
+      environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: CdO
+      ports:
+        - "3306:3306" # Mapear el puerto 3306 del contenedor al puerto 3306 del host
+      networks:
+        - CdO_network # Conecta el contenedor a la red CdO_Network
+
+networks:
+  CdO_network:  
 
 # Puedes agregar más servicios o configuraciones aquí si es necesario
 

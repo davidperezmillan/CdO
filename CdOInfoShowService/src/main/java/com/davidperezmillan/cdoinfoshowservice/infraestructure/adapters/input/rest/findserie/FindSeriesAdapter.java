@@ -24,7 +24,7 @@ public class FindSeriesAdapter {
         this.searchInfoUseCase = searchInfoUseCase;
     }
 
-    // @CrossOrigin(origins = "http://localhost")
+    @CrossOrigin(origins = { "http://localhost", "http://192.168.1.195" })
     @GetMapping(value = "find", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<FindSeriesResponse> findSeries(@RequestParam String search,
             @RequestParam(required = false) boolean isSerie) {
