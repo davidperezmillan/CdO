@@ -15,6 +15,9 @@ public class Item {
     @JsonProperty("poster")
     private String poster;
 
+    @JsonProperty("cover")
+    private String cover;
+
     @JsonProperty("isSerie")
     private boolean isSerie;
 
@@ -23,4 +26,5 @@ public class Item {
 
     @JsonProperty("rating")
     private double rating;
+
 }

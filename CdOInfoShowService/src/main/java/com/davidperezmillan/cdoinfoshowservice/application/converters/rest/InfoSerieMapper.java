@@ -12,7 +12,8 @@ public interface InfoSerieMapper {
         modelMapper.createTypeMap(Serie.class, InfoSeriesResponse.class)
                 .addMappings(mapper -> mapper.map(src -> src.getInfo().getSynopsis(), InfoSeriesResponse::setSinopsis))
                 .addMappings(mapper -> mapper.map(src -> src.getInfo().getYear(), InfoSeriesResponse::setYear))
-                .addMappings(mapper -> mapper.map(src -> src.getInfo().getRating(), InfoSeriesResponse::setRating));
+                .addMappings(mapper -> mapper.map(src -> src.getInfo().getRating(), InfoSeriesResponse::setRating))
+                .addMappings(mapper -> mapper.map(src -> src.getInfo().getStatus(), InfoSeriesResponse::setStatus));
 
         return modelMapper.map(serie, InfoSeriesResponse.class);
     }
