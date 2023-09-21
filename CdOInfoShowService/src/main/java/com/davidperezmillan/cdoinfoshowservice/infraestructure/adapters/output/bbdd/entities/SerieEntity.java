@@ -19,7 +19,7 @@ public class SerieEntity {
     @Column(name = "releaseyear")
     private int releaseYear;
 
-    @Column(name = "sinopsis")
+    @Column(name = "sinopsis", length = 10000)
     @Lob
     private String sinopsis;
 
