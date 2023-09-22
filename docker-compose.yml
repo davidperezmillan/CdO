@@ -10,25 +10,49 @@ services:
       - "8080:8080"  # Mapea el puerto del contenedor al puerto del host
     container_name: Info_Show # Nombre del contenedor
     networks:
-      - CdO_network # Conecta el contenedor a la red CdO_Network  
+      - docker-cdo-network # Conecta el contenedor a la red CdO_Network  
 
 
   mariadb:
-      image: mariadb:latest
-      container_name: mariadb_container
-      environment:
-        MYSQL_ROOT_PASSWORD: root
-        MYSQL_DATABASE: CdO
-      volumes:
-        - ./mariadb/config:/config
-        - ./mariadb/data:/data
-      ports:
-        - "3306:3306" # Mapear el puerto 3306 del contenedor al puerto 3306 del host
-      networks:
-        - CdO_network # Conecta el contenedor a la red CdO_Network
+    image: ghcr.io/linuxserver/mariadb
+    container_name: mariadb_cdo
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - MYSQL_ROOT_PASSWORD=root
+      - TZ=Europe/Madrid
+      - MYSQL_DATABASE=CdO #optional
+      - MYSQL_USER=apps #optional
+      - MYSQL_PASSWORD=apps #optional
+    # #- REMOTE_SQL=http://URL1/your.sql,https://URL2/your.sql #optional
+    volumes:
+      - ./mariadb/config:/config
+      - ./mariadb/data:/data
+    # ports:
+    #   - 3306:3306
+    restart: unless-stopped
+    networks:
+      - 'docker-cdo-network'
+
+
+
+  phpmyadmin:
+     image: phpmyadmin
+     container_name: phpmyadmin_cdo
+     environment:
+       PMA_HOST: mariadb_cdo
+       #PMA_USER: micro_dev
+       #PMA_PASSWORD: micro_dev
+     ports:
+       - 8081:80
+     restart: unless-stopped
+     networks:
+       - 'docker-cdo-network'
+
+
 
 networks:
-  CdO_network:  
+  docker-apps-network: #necesitamos crear en una red para alojar los servicios en ella y que puedan comunicarse entre sí
 
 # Puedes agregar más servicios o configuraciones aquí si es necesario
 
