@@ -18,6 +18,7 @@ public class SerieMapper {
                 map().setId((long) source.getId());
                 map().setReleaseYear(source.getInfo().getYear());
                 map().setSinopsis(source.getInfo().getSynopsis());
+                map().setSerie(source.getIsSerie());
             }
         });
 
@@ -34,6 +35,7 @@ public class SerieMapper {
                 map().setId(source.getId().intValue());
                 map().getInfo().setYear(source.getReleaseYear());
                 map().getInfo().setSynopsis(source.getSinopsis());
+                map().setIsSerie(source.isSerie());
             }
         });
 

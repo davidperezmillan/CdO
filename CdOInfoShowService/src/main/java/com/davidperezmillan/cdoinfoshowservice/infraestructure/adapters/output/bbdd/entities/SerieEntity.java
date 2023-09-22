@@ -26,4 +26,7 @@ public class SerieEntity {
     @Column(name = "visto", updatable = false)
     private boolean visto;
 
+    @Column(name = "serie")
+    private boolean serie;
+
 }
