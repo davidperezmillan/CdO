@@ -8,4 +8,5 @@ public class SerieEntityRequest {
     private String title;
     private int releaseYear;
     private String sinopsis;
+    private boolean serie;
 }
