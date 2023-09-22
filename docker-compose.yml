@@ -10,7 +10,7 @@ services:
       - "8080:8080"  # Mapea el puerto del contenedor al puerto del host
     container_name: Info_Show # Nombre del contenedor
     networks:
-      - docker-cdo-network # Conecta el contenedor a la red CdO_Network  
+      - 'docker-cdo-network' # Conecta el contenedor a la red CdO_Network  
 
 
   mariadb:
@@ -28,33 +28,18 @@ services:
     volumes:
       - ./mariadb/config:/config
       - ./mariadb/data:/data
-    # ports:
-    #   - 3306:3306
+    ports:
+      - 3306:3306
     restart: unless-stopped
     networks:
       - 'docker-cdo-network'
 
 
-
-  phpmyadmin:
-     image: phpmyadmin
-     container_name: phpmyadmin_cdo
-     environment:
-       PMA_HOST: mariadb_cdo
-       #PMA_USER: micro_dev
-       #PMA_PASSWORD: micro_dev
-     ports:
-       - 8081:80
-     restart: unless-stopped
-     networks:
-       - 'docker-cdo-network'
-
-
-
 networks:
-  docker-apps-network: #necesitamos crear en una red para alojar los servicios en ella y que puedan comunicarse entre sí
+  docker-cdo-network: #necesitamos crear en una red para alojar los servicios en ella y que puedan comunicarse entre sí
 
 # Puedes agregar más servicios o configuraciones aquí si es necesario
+
 
 
 
