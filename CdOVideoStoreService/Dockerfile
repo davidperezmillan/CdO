@@ -13,10 +13,10 @@ WORKDIR /app
 COPY pom.xml /app
 COPY src /app/src
 
-ENV SPRING_PROFILES_ACTIVE=prod
-
 # Ejecutamos maven clean install para construir la aplicación
 RUN mvn clean install
 
+ENV SPRING_PROFILES_ACTIVE=prod
+
 # Comando para arrancar el microservicio (ajusta esto según tu proyecto)
-CMD ["java", "-jar", "target/CdOInfoShowService-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "target/CdOVideoStoreService-0.0.1-SNAPSHOT.jar"]

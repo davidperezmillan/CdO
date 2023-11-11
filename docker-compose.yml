@@ -12,6 +12,16 @@ services:
     networks:
       - 'docker-cdo-network' # Conecta el contenedor a la red CdO_Network  
 
+  videostore:
+    image: videostore # Nombre de la imagen resultante
+    build:
+      context: CdOVideoStoreService/.  # Usa el directorio actual como contexto para encontrar el Dockerfile
+      dockerfile: Dockerfile  # Nombre del Dockerfile
+    ports:
+      - "8081:8080"  # Mapea el puerto del contenedor al puerto del host
+    container_name: Video_Store # Nombre del contenedor
+    networks:
+      - 'docker-cdo-network' # Conecta el contenedor a la red CdO_Network  
 
   mariadb:
     image: ghcr.io/linuxserver/mariadb
