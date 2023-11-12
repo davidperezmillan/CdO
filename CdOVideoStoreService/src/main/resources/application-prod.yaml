@@ -3,7 +3,8 @@ server:
 
 spring:
     datasource:
-        url: jdbc:mariadb://mariadb:3306/CdO
+        # url: jdbc:mariadb://mariadb:3306/CdO
+        url: jdbc:mysql://localhost:3306/CdO
         driverClassName: org.mariadb.jdbc.Driver
         username: apps
         password: apps
