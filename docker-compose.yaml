@@ -8,6 +8,8 @@ services:
       dockerfile: Dockerfile  # Nombre del Dockerfile
     ports:
       - "8080:8080"  # Mapea el puerto del contenedor al puerto del host
+    depends_on:
+      - mariadb
     container_name: Info_Show # Nombre del contenedor
     networks:
       - 'docker-cdo-network' # Conecta el contenedor a la red CdO_Network  
@@ -19,6 +21,8 @@ services:
       dockerfile: Dockerfile  # Nombre del Dockerfile
     ports:
       - "8081:8080"  # Mapea el puerto del contenedor al puerto del host
+    depends_on:
+      - mariadb
     container_name: Video_Store # Nombre del contenedor
     networks:
       - 'docker-cdo-network' # Conecta el contenedor a la red CdO_Network  
