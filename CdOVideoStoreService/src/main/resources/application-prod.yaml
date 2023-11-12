@@ -3,22 +3,17 @@ server:
 
 spring:
     datasource:
-        # url: jdbc:mariadb://mariadb:3306/CdO
-        url: jdbc:mysql://localhost:3306/CdO
+        url: jdbc:mariadb://mariadb:3316/CdO
         driverClassName: org.mariadb.jdbc.Driver
-        username: apps
-        password: apps
+        username: root
+        password: root
     jpa:
         database-platform: org.hibernate.dialect.MariaDBDialect
         hibernate:
             ddl-auto: update
 
-    test:
-        classes: src/test/java
-
 logging:
     level:
         com.davidperezmillan.cdoinfoshowservice: INFO
         org.hibernate: WARN
-
 
