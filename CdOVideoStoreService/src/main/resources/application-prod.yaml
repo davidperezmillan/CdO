@@ -5,8 +5,8 @@ spring:
     datasource:
         url: jdbc:mariadb://mariadb:3306/CdO
         driverClassName: org.mariadb.jdbc.Driver
-        username: root
-        password: root
+        username: apps
+        password: apps
     jpa:
         database-platform: org.hibernate.dialect.MariaDBDialect
         hibernate:
