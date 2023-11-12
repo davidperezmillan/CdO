@@ -12,6 +12,9 @@ spring:
         hibernate:
             ddl-auto: update
 
+    test:
+        classes: src/test/java
+
 logging:
     level:
         com.davidperezmillan.cdoinfoshowservice: INFO

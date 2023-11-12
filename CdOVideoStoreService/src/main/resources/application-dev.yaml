@@ -16,6 +16,8 @@ spring:
             ddl-auto: update
 
 
+    test:
+        classes: src/test/java
 
 logging:
     level:
