@@ -13,12 +13,6 @@ spring:
         hibernate:
             ddl-auto: create-drop
 
-    #    spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
-    #    spring.jpa.database-platform = org.hibernate.dialect.MySQL5Dialect
-    #    spring.jpa.generate-ddl=true
-    #    spring.jpa.hibernate.ddl-auto = update
-
-
     test:
         classes: src/test/java
 

@@ -9,8 +9,9 @@ spring:
         password: root
     jpa:
         database-platform: org.hibernate.dialect.MariaDBDialect
+        generate-ddl: true
         hibernate:
-            ddl-auto: update
+            ddl-auto: create-drop
 
 logging:
     level:
