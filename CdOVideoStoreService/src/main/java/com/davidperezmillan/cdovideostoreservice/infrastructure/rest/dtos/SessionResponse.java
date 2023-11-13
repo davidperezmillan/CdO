@@ -7,6 +7,6 @@ import java.util.Map;
 
 @Data
 public class SessionResponse {
-
-    private Map<Integer, String> episodes = new HashMap<Integer, String>();
+    private String url;
+    private Map<Integer, String> episodes = new HashMap<>();
 }

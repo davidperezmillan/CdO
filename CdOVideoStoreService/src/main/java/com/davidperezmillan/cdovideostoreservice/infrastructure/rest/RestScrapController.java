@@ -23,6 +23,11 @@ public class RestScrapController {
         this.searchTvShowService = searchTvShowService;
     }
 
+    @GetMapping("/")
+    public List<TvShowResponse> getAll() {
+        return searchTvShowService.getAll();
+    }
+
     @GetMapping("/{title}")
     public List<TvShowResponse> getTvShow(@PathVariable String title) {
         return searchTvShowService.getTvShow(title);

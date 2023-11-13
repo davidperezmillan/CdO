@@ -29,9 +29,46 @@ public class SearchTvShowService implements SearchTvShowUsecase {
     }
 
     @Override
+    public List<TvShowResponse> getAll() {
+        String proxyTorrent = RulesDonTorrent.getProxyDonTorrent();
+        List<TvShow> resultBBDD = tvShowRepository.findAll();
+        List<TvShowResponse> result = new ArrayList<>();
+        if (resultBBDD.isEmpty()) {
+            log.info("No se ha encontrado series");
+            return null;
+        }
+        log.info("Se han encontrado " + resultBBDD.size() + " series");
+        for (TvShow tvShow : resultBBDD) {
+            TvShowResponse tvShowResponse = new TvShowResponse();
+            tvShowResponse.setTitle(tvShow.getTitle());
+            tvShowResponse.setId(tvShow.getId());
+
+            log.debug("Serie: " + tvShow.getTitle() + " - " + tvShow.getId());
+            Map<Integer, SessionResponse> sessions = new HashMap<>();
+            for (Map.Entry<Integer, Session> session : tvShow.getSessions().entrySet()) {
+                log.debug("Session: " + session.getKey());
+                SessionResponse sessionResponse = new SessionResponse();
+                sessionResponse.setUrl(proxyTorrent + session.getValue().getUrl());
+                Map<Integer, String> episodes = new HashMap<>();
+                for (Map.Entry<Integer, Episode> episode : session.getValue().getEpisodes().entrySet()) {
+                    log.debug("Episode: " + episode.getKey());
+                    episodes.put(episode.getKey(), episode.getValue().getTorrent().getMagnetLink());
+                }
+                sessionResponse.setEpisodes(episodes);
+                sessions.put(session.getKey(), sessionResponse);
+            }
+            tvShowResponse.setSessions(sessions);
+            result.add(tvShowResponse);
+        }
+        return result;
+
+    }
+
+    @Override
     public List<TvShowResponse> getTvShow(String title) {
+        String proxyTorrent = RulesDonTorrent.getProxyDonTorrent();
         List<TvShow> resultBBDD = tvShowRepository.findByTitleContainingIgnoreCase(title);
-        List<TvShowResponse> result = new ArrayList<TvShowResponse>();
+        List<TvShowResponse> result = new ArrayList<>();
         if (resultBBDD.isEmpty()) {
             log.info("No se ha encontrado la serie " + title);
             return null;
@@ -43,11 +80,12 @@ public class SearchTvShowService implements SearchTvShowUsecase {
             tvShowResponse.setId(tvShow.getId());
 
             log.debug("Serie: " + tvShow.getTitle() + " - " + tvShow.getId());
-            Map<Integer, SessionResponse> sessions = new HashMap<Integer, SessionResponse>();
+            Map<Integer, SessionResponse> sessions = new HashMap<>();
             for (Map.Entry<Integer, Session> session : tvShow.getSessions().entrySet()) {
                 log.debug("Session: " + session.getKey());
                 SessionResponse sessionResponse = new SessionResponse();
-                Map<Integer, String> episodes = new HashMap<Integer, String>();
+                sessionResponse.setUrl(proxyTorrent + session.getValue().getUrl());
+                Map<Integer, String> episodes = new HashMap<>();
                 for (Map.Entry<Integer, Episode> episode : session.getValue().getEpisodes().entrySet()) {
                     log.debug("Episode: " + episode.getKey());
                     episodes.put(episode.getKey(), episode.getValue().getTorrent().getMagnetLink());

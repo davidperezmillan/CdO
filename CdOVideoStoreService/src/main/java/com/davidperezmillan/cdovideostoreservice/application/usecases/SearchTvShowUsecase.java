@@ -6,5 +6,7 @@ import java.util.List;
 
 public interface SearchTvShowUsecase {
 
+    List<TvShowResponse> getAll();
+
     List<TvShowResponse> getTvShow(String title);
 }
