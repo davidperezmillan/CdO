@@ -1,9 +1,9 @@
 server:
-    port: 8085
+    port : 8084
 
 spring:
     datasource:
-        url: jdbc:mariadb://mariadb:3306/CdO
+        url: jdbc:mariadb://192.168.1.195:3316/CdO
         driverClassName: org.mariadb.jdbc.Driver
         username: root
         password: root
@@ -24,8 +24,7 @@ spring:
 
 logging:
     level:
-        com.davidperezmillan.cdovideostoreservice: DEBUG
+        com.davidperezmillan.cdoinfoshowservice: DEBUG
         org.hibernate: DEBUG
-
 
 

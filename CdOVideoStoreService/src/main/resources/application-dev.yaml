@@ -21,7 +21,7 @@ spring:
 
 logging:
     level:
-        com.davidperezmillan.cdoinfoshowservice: DEBUG
+        com.davidperezmillan.cdovideostoreservice: DEBUG
         org.hibernate: DEBUG
 
 

@@ -1,9 +1,9 @@
 server:
-    port: 8085
+    port : 8085
 
 spring:
     datasource:
-        url: jdbc:mariadb://mariadb:3306/CdO
+        url: jdbc:mariadb://192.168.1.195:3316/CdO
         driverClassName: org.mariadb.jdbc.Driver
         username: root
         password: root
@@ -13,10 +13,10 @@ spring:
         hibernate:
             ddl-auto: create-drop
 
-    #    spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
-    #    spring.jpa.database-platform = org.hibernate.dialect.MySQL5Dialect
-    #    spring.jpa.generate-ddl=true
-    #    spring.jpa.hibernate.ddl-auto = update
+#    spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+#    spring.jpa.database-platform = org.hibernate.dialect.MySQL5Dialect
+#    spring.jpa.generate-ddl=true
+#    spring.jpa.hibernate.ddl-auto = update
 
 
     test:
@@ -26,6 +26,5 @@ logging:
     level:
         com.davidperezmillan.cdovideostoreservice: DEBUG
         org.hibernate: DEBUG
-
 
 
