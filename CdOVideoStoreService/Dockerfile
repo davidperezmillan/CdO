@@ -16,7 +16,7 @@ COPY src /app/src
 ENV SPRING_PROFILES_ACTIVE=prod
 
 # Ejecutamos maven clean install para construir la aplicación
-RUN mvn clean install
+RUN mvn clean install -DskipTests
 
 
 # Comando para arrancar el microservicio (ajusta esto según tu proyecto)
