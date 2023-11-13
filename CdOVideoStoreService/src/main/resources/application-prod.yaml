@@ -1,9 +1,9 @@
 server:
-    port: 8085
+    port: 8080
 
 spring:
     datasource:
-        url: jdbc:mariadb://mariadb:3306/CdO
+        url: jdbc:mariadb://192.168.1.195:3316/CdO
         driverClassName: org.mariadb.jdbc.Driver
         username: root
         password: root
@@ -11,7 +11,7 @@ spring:
         database-platform: org.hibernate.dialect.MariaDBDialect
         generate-ddl: true
         hibernate:
-            ddl-auto: create-drop
+            ddl-auto: update
 
     #    spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
     #    spring.jpa.database-platform = org.hibernate.dialect.MySQL5Dialect

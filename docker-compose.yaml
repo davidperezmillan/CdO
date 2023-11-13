@@ -29,7 +29,7 @@ services:
 
   mariadb:
     image: ghcr.io/linuxserver/mariadb
-    container_name: mariadb_cdo
+    container_name: mariadb
     environment:
       - PUID=1000
       - PGID=1000
@@ -46,11 +46,12 @@ services:
       - 3316:3306
     restart: unless-stopped
     networks:
-      - 'docker-cdo-network'
+      - 'docker-cdo-network' # Conecta el contenedor a la red CdO_Network
 
 
 networks:
   docker-cdo-network: #necesitamos crear en una red para alojar los servicios en ella y que puedan comunicarse entre sí
+    driver: bridge
 
 # Puedes agregar más servicios o configuraciones aquí si es necesario
 
