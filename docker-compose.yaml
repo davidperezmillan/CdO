@@ -43,7 +43,7 @@ services:
       - ./mariadb/config:/config
       - ./mariadb/data:/data
     ports:
-      - 3316:3316
+      - 3316:3306
     restart: unless-stopped
     networks:
       - 'docker-cdo-network'
