@@ -41,12 +41,12 @@ public class RestScrapController {
     }
 
     @PostMapping("/")
-    public int scrap(@RequestBody TvShowRequest tvShowRequest) {
+    public List<TvShowResponse> scrap(@RequestBody TvShowRequest tvShowRequest) {
         return insertTvShowService.addTitleByLetter(tvShowRequest.getTitle());
     }
 
     @PostMapping("/estrenos")
-    public int scrapPremieres() {
+    public List<TvShowResponse> scrapPremieres() {
         return insertTvShowService.addPremieres();
     }
 

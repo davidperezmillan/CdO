@@ -1,9 +1,13 @@
 package com.davidperezmillan.cdovideostoreservice.application.usecases;
 
-public interface InsertTvShowUsecase {
-    int addTitleByLetter(String letter);
+import com.davidperezmillan.cdovideostoreservice.infrastructure.rest.dtos.TvShowResponse;
 
-    int addPremieres();
+import java.util.List;
+
+public interface InsertTvShowUsecase {
+    List<TvShowResponse> addTitleByLetter(String letter);
+
+    List<TvShowResponse> addPremieres();
 
     int addCapitulos(String title);
 

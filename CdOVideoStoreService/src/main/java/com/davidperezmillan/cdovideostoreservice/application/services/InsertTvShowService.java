@@ -9,11 +9,16 @@ import com.davidperezmillan.cdovideostoreservice.infrastructure.bbdd.entities.Se
 import com.davidperezmillan.cdovideostoreservice.infrastructure.bbdd.entities.Torrent;
 import com.davidperezmillan.cdovideostoreservice.infrastructure.bbdd.entities.TvShow;
 import com.davidperezmillan.cdovideostoreservice.infrastructure.bbdd.repositories.TvShowRepository;
+import com.davidperezmillan.cdovideostoreservice.infrastructure.rest.dtos.SessionResponse;
+import com.davidperezmillan.cdovideostoreservice.infrastructure.rest.dtos.TvShowResponse;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Log4j2
 @Service
@@ -30,37 +35,89 @@ public class InsertTvShowService implements InsertTvShowUsecase {
     }
 
     @Override
-    public int addTitleByLetter(String letter) {
+    public List<TvShowResponse> addTitleByLetter(String letter) {
         List<ScrapBeanResponse> scrapBeanResponses = donTorrentScraperService.getTvShow(letter);
-        save(scrapBeanResponses);
-        return scrapBeanResponses.size();
+        List<TvShow> saveds = save(scrapBeanResponses);
+
+        log.info("Se han encontrado " + saveds.size() + " series");
+        List<TvShowResponse> result = new ArrayList<>();
+        for (TvShow tvShow : saveds) {
+            TvShowResponse tvShowResponse = new TvShowResponse();
+            tvShowResponse.setTitle(tvShow.getTitle());
+            tvShowResponse.setId(tvShow.getId());
+
+            log.debug("Serie: " + tvShow.getTitle() + " - " + tvShow.getId());
+            Map<Integer, SessionResponse> sessions = new HashMap<>();
+            for (Map.Entry<Integer, Session> session : tvShow.getSessions().entrySet()) {
+                log.debug("Session: " + session.getKey());
+                SessionResponse sessionResponse = new SessionResponse();
+                sessionResponse.setUrl(session.getValue().getUrl());
+                Map<Integer, String> episodes = new HashMap<>();
+                for (Map.Entry<Integer, Episode> episode : session.getValue().getEpisodes().entrySet()) {
+                    log.debug("Episode: " + episode.getKey());
+                    episodes.put(episode.getKey(), episode.getValue().getTorrent().getMagnetLink());
+                }
+                sessionResponse.setEpisodes(episodes);
+                sessions.put(session.getKey(), sessionResponse);
+            }
+            tvShowResponse.setSessions(sessions);
+            result.add(tvShowResponse);
+        }
+
+        return result;
     }
 
     @Override
-    public int addPremieres() {
+    public List<TvShowResponse> addPremieres() {
         List<ScrapBeanResponse> scrapBeanResponses = donTorrentScraperService.getPremieres();
-        save(scrapBeanResponses);
-        return scrapBeanResponses.size();
+        List<TvShow> saveds = save(scrapBeanResponses);
+
+        log.info("Se han encontrado " + saveds.size() + " series");
+        List<TvShowResponse> result = new ArrayList<>();
+        for (TvShow tvShow : saveds) {
+            TvShowResponse tvShowResponse = new TvShowResponse();
+            tvShowResponse.setTitle(tvShow.getTitle());
+            tvShowResponse.setId(tvShow.getId());
+
+            log.debug("Serie: " + tvShow.getTitle() + " - " + tvShow.getId());
+            Map<Integer, SessionResponse> sessions = new HashMap<>();
+            for (Map.Entry<Integer, Session> session : tvShow.getSessions().entrySet()) {
+                log.debug("Session: " + session.getKey());
+                SessionResponse sessionResponse = new SessionResponse();
+                sessionResponse.setUrl(session.getValue().getUrl());
+                Map<Integer, String> episodes = new HashMap<>();
+                for (Map.Entry<Integer, Episode> episode : session.getValue().getEpisodes().entrySet()) {
+                    log.debug("Episode: " + episode.getKey());
+                    episodes.put(episode.getKey(), episode.getValue().getTorrent().getMagnetLink());
+                }
+                sessionResponse.setEpisodes(episodes);
+                sessions.put(session.getKey(), sessionResponse);
+            }
+            tvShowResponse.setSessions(sessions);
+            result.add(tvShowResponse);
+        }
+
+        return result;
 
     }
 
     @Override
     public int addCapitulos(String title) {
-        TvShow resultBBDD = tvShowRepository.findByTitle(title);
-        resultBBDD.getSessions().forEach((key, value) -> {
+        TvShow saveds = tvShowRepository.findByTitle(title);
+        saveds.getSessions().forEach((key, value) -> {
             List<ScrapBeanResponse> scrapBeanResponses = donTorrentScraperService.getEpisode(value.getUrl());
             scrapBeanResponses.forEach(scrapBeanResponse -> {
                 Torrent torrent = new Torrent();
                 torrent.setMagnetLink(scrapBeanResponse.getUrl());
                 Episode episode = new Episode();
                 episode.setTorrent(torrent);
-                episode.setSession(resultBBDD.getSessions().get(key));
-                Session session = resultBBDD.getSessions().get(key);
+                episode.setSession(saveds.getSessions().get(key));
+                Session session = saveds.getSessions().get(key);
                 session.getEpisodes().put(scrapBeanResponse.getEpisode(), episode);
             });
         });
-        tvShowRepository.save(resultBBDD);
-        return resultBBDD.getSessions().size();
+        tvShowRepository.save(saveds);
+        return saveds.getSessions().size();
 
     }
 
@@ -83,7 +140,8 @@ public class InsertTvShowService implements InsertTvShowUsecase {
         return resultBBDD.getSessions().size();
     }
 
-    private void save(List<ScrapBeanResponse> scrapBeanResponses) {
+    private List<TvShow> save(List<ScrapBeanResponse> scrapBeanResponses) {
+        List<TvShow> tvShows = new ArrayList();
         // mappear
         for (ScrapBeanResponse scrapBeanResponse : scrapBeanResponses) {
             // update or save
@@ -103,6 +161,7 @@ public class InsertTvShowService implements InsertTvShowUsecase {
                         log.info("Actualizamos la serie " + tvShow.getTitle() + " con " + tvShow.getSessions().size()
                                 + " temporadas");
                         tvShowRepository.save(tvShow);
+
                     }
                 }
             } else { // new tv show
@@ -115,9 +174,10 @@ public class InsertTvShowService implements InsertTvShowUsecase {
                 if (scrapBeanResponse.getQuality().equals(CalidadEnum.HD)) {
                     log.info("Insertamos una nueva serie " + newTvShow.getTitle() + " con la "
                             + newTvShow.getSessions().size() + " temporada");
-                    tvShowRepository.save(newTvShow);
+                    tvShows.add(tvShowRepository.save(newTvShow));
                 }
             }
         }
+        return tvShows;
     }
 }

@@ -32,12 +32,13 @@ public class SearchTvShowService implements SearchTvShowUsecase {
     public List<TvShowResponse> getAll() {
         String proxyTorrent = RulesDonTorrent.getProxyDonTorrent();
         List<TvShow> resultBBDD = tvShowRepository.findAll();
-        List<TvShowResponse> result = new ArrayList<>();
+
         if (resultBBDD.isEmpty()) {
             log.info("No se ha encontrado series");
             return null;
         }
         log.info("Se han encontrado " + resultBBDD.size() + " series");
+        List<TvShowResponse> result = new ArrayList<>();
         for (TvShow tvShow : resultBBDD) {
             TvShowResponse tvShowResponse = new TvShowResponse();
             tvShowResponse.setTitle(tvShow.getTitle());
@@ -68,12 +69,14 @@ public class SearchTvShowService implements SearchTvShowUsecase {
     public List<TvShowResponse> getTvShow(String title) {
         String proxyTorrent = RulesDonTorrent.getProxyDonTorrent();
         List<TvShow> resultBBDD = tvShowRepository.findByTitleContainingIgnoreCase(title);
-        List<TvShowResponse> result = new ArrayList<>();
+
         if (resultBBDD.isEmpty()) {
             log.info("No se ha encontrado la serie " + title);
             return null;
         }
+
         log.info("Se han encontrado " + resultBBDD.size() + " series");
+        List<TvShowResponse> result = new ArrayList<>();
         for (TvShow tvShow : resultBBDD) {
             TvShowResponse tvShowResponse = new TvShowResponse();
             tvShowResponse.setTitle(tvShow.getTitle());
