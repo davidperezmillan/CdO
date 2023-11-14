@@ -35,7 +35,7 @@ public class SearchTvShowService implements SearchTvShowUsecase {
         String proxyTorrent = RulesDonTorrent.getProxyDonTorrent();
 
         // get find all pageable
-        Pageable pageable = PageRequest.of(page, size, Sort.by("id").ascending());
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending());
         Page<TvShow> pageResult = tvShowRepository.findAll(pageable);
 
         List<TvShow> resultBBDD = pageResult.getContent();
