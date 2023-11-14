@@ -3,6 +3,7 @@ package com.davidperezmillan.cdovideostoreservice.application.services;
 import com.davidperezmillan.cdovideostoreservice.application.scrap.rules.RulesDonTorrent;
 import com.davidperezmillan.cdovideostoreservice.infrastructure.bbdd.entities.Episode;
 import com.davidperezmillan.cdovideostoreservice.infrastructure.bbdd.entities.Session;
+import com.davidperezmillan.cdovideostoreservice.infrastructure.rest.dtos.PageResponse;
 import com.davidperezmillan.cdovideostoreservice.infrastructure.rest.dtos.SessionResponse;
 import com.davidperezmillan.cdovideostoreservice.infrastructure.rest.dtos.TvShowResponse;
 import com.davidperezmillan.cdovideostoreservice.application.usecases.SearchTvShowUsecase;
@@ -10,18 +11,18 @@ import com.davidperezmillan.cdovideostoreservice.infrastructure.bbdd.entities.Tv
 import com.davidperezmillan.cdovideostoreservice.infrastructure.bbdd.repositories.TvShowRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Log4j2
 @Service
 public class SearchTvShowService implements SearchTvShowUsecase {
 
-    private TvShowRepository tvShowRepository;
+    private final TvShowRepository tvShowRepository;
 
     @Autowired
     public SearchTvShowService(TvShowRepository tvShowRepository) {
@@ -29,10 +30,14 @@ public class SearchTvShowService implements SearchTvShowUsecase {
     }
 
     @Override
-    public List<TvShowResponse> getAll() {
+    public PageResponse getAll(int page, int size) {
         String proxyTorrent = RulesDonTorrent.getProxyDonTorrent();
-        List<TvShow> resultBBDD = tvShowRepository.findAll();
 
+        // get find all pageable
+        Pageable pageable = PageRequest.of(page, size);
+        Page<TvShow> pageResult = tvShowRepository.findAll(pageable);
+
+        List<TvShow> resultBBDD = pageResult.getContent();
         if (resultBBDD.isEmpty()) {
             log.info("No se ha encontrado series");
             return null;
@@ -61,15 +66,24 @@ public class SearchTvShowService implements SearchTvShowUsecase {
             tvShowResponse.setSessions(sessions);
             result.add(tvShowResponse);
         }
-        return result;
+
+        PageResponse pageResponse = new PageResponse();
+        pageResponse.setTotalElements(pageResult.getTotalElements());
+        pageResponse.setTotalPages(pageResult.getTotalPages());
+        pageResponse.setNumber(pageResult.getNumber());
+        pageResponse.setSize(pageResult.getSize());
+        pageResponse.setContent(Collections.singletonList(result));
+        return pageResponse;
 
     }
 
     @Override
-    public List<TvShowResponse> getTvShow(String title) {
+    public PageResponse getTvShow(String title, int page, int size) {
         String proxyTorrent = RulesDonTorrent.getProxyDonTorrent();
-        List<TvShow> resultBBDD = tvShowRepository.findByTitleContainingIgnoreCase(title);
-
+        // get find all pageable
+        Pageable pageable = PageRequest.of(page, size);
+        Page<TvShow> pageResult = tvShowRepository.findByTitleContainingIgnoreCase(title, pageable);
+        List<TvShow> resultBBDD = pageResult.getContent();
         if (resultBBDD.isEmpty()) {
             log.info("No se ha encontrado la serie " + title);
             return null;
@@ -99,7 +113,13 @@ public class SearchTvShowService implements SearchTvShowUsecase {
             tvShowResponse.setSessions(sessions);
             result.add(tvShowResponse);
         }
-        return result;
+        PageResponse pageResponse = new PageResponse();
+        pageResponse.setTotalElements(pageResult.getTotalElements());
+        pageResponse.setTotalPages(pageResult.getTotalPages());
+        pageResponse.setNumber(pageResult.getNumber());
+        pageResponse.setSize(pageResult.getSize());
+        pageResponse.setContent(Collections.singletonList(result));
+        return pageResponse;
 
     }
 }

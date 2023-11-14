@@ -2,6 +2,7 @@ package com.davidperezmillan.cdovideostoreservice.infrastructure.rest;
 
 import com.davidperezmillan.cdovideostoreservice.application.services.InsertTvShowService;
 import com.davidperezmillan.cdovideostoreservice.application.services.SearchTvShowService;
+import com.davidperezmillan.cdovideostoreservice.infrastructure.rest.dtos.PageResponse;
 import com.davidperezmillan.cdovideostoreservice.infrastructure.rest.dtos.TvShowRequest;
 import com.davidperezmillan.cdovideostoreservice.infrastructure.rest.dtos.TvShowResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,20 +25,23 @@ public class RestScrapController {
     }
 
     @GetMapping("/")
-    public List<TvShowResponse> getAll() {
-        return searchTvShowService.getAll();
+    public PageResponse getAll(@RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return searchTvShowService.getAll(page, size);
     }
 
     @GetMapping("/{title}")
-    public List<TvShowResponse> getTvShow(@PathVariable String title) {
-        return searchTvShowService.getTvShow(title);
+    public PageResponse getTvShow(@PathVariable String title, @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return searchTvShowService.getTvShow(title, page, size);
     }
 
     @GetMapping("/all/{title}")
-    public List<TvShowResponse> all(@PathVariable("title") String title) {
+    public PageResponse all(@PathVariable("title") String title, @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
         insertTvShowService.addTitleByLetter(title);
         insertTvShowService.addCapitulos(title);
-        return searchTvShowService.getTvShow(title);
+        return searchTvShowService.getTvShow(title, page, size);
     }
 
     @PostMapping("/")

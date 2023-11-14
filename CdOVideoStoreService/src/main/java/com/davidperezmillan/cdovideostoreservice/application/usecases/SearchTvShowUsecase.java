@@ -1,12 +1,10 @@
 package com.davidperezmillan.cdovideostoreservice.application.usecases;
 
-import com.davidperezmillan.cdovideostoreservice.infrastructure.rest.dtos.TvShowResponse;
-
-import java.util.List;
+import com.davidperezmillan.cdovideostoreservice.infrastructure.rest.dtos.PageResponse;
 
 public interface SearchTvShowUsecase {
 
-    List<TvShowResponse> getAll();
+    PageResponse getAll(int page, int size);
 
-    List<TvShowResponse> getTvShow(String title);
+    PageResponse getTvShow(String title, int page, int size);
 }

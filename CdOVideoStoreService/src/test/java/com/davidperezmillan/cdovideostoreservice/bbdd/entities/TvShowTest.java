@@ -8,6 +8,8 @@ import com.davidperezmillan.cdovideostoreservice.infrastructure.bbdd.repositorie
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Objects;
@@ -18,20 +20,21 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @DataJpaTest
 class TvShowTest {
 
-    private static String magnetLink = "magnet:?xt=urn:btih:4d1c8b0b4e1e4b4b9e4b4b9e4b4b9e4b4b9e4b4b";
+    private final static String magnetLink = "magnet:?xt=urn:btih:4d1c8b0b4e1e4b4b9e4b4b9e4b4b9e4b4b9e4b4b";
+    private final static String title = "Ahsoka";
 
     @Autowired
     TvShowRepository tvShowRepository;
 
     @Test
     void testEquals() {
-        TvShow tvShow = createTvShow("Ahsoka");
+        TvShow tvShow = createTvShow();
         tvShowRepository.save(tvShow);
 
         TvShow tvShowBBDD = tvShowRepository.findById(tvShow.getId()).orElse(null);
 
         assertThat(tvShow).isNotNull();
-        assertThat(Objects.requireNonNull(tvShowBBDD).getTitle()).isEqualTo("Ahsoka");
+        assertThat(Objects.requireNonNull(tvShowBBDD).getTitle()).isEqualTo(title);
         assertEquals(tvShow, tvShowBBDD);
         assertEquals(tvShowBBDD.getSessions().size(), 1);
 
@@ -39,7 +42,7 @@ class TvShowTest {
 
     @Test
     void testUpdate() {
-        TvShow tvShow = createTvShow("Ahsoka");
+        TvShow tvShow = createTvShow();
         tvShowRepository.save(tvShow);
 
         TvShow updateElement = tvShowRepository.findByTitle(tvShow.getTitle());
@@ -56,10 +59,10 @@ class TvShowTest {
 
     @Test
     void testLike() {
-        TvShow tvShow = createTvShow("Ahsoka");
+        TvShow tvShow = createTvShow();
         tvShowRepository.save(tvShow);
-
-        List<TvShow> tvShowBBDDList = tvShowRepository.findByTitleContainingIgnoreCase("ahs");
+        Pageable pageable = PageRequest.of(0, 5);
+        List<TvShow> tvShowBBDDList = tvShowRepository.findByTitleContainingIgnoreCase("ahs", pageable).getContent();
 
         assertThat(tvShowBBDDList).isNotNull();
         assertEquals(tvShowBBDDList.size(), 1);
@@ -67,7 +70,7 @@ class TvShowTest {
 
     }
 
-    private TvShow createTvShow(String title) {
+    private TvShow createTvShow() {
         TvShow tvShow = new TvShow();
         tvShow.setTitle(title);
         createSessionAddSerie(tvShow);
