@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -34,7 +35,7 @@ public class SearchTvShowService implements SearchTvShowUsecase {
         String proxyTorrent = RulesDonTorrent.getProxyDonTorrent();
 
         // get find all pageable
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id").ascending());
         Page<TvShow> pageResult = tvShowRepository.findAll(pageable);
 
         List<TvShow> resultBBDD = pageResult.getContent();
