@@ -21,11 +21,9 @@ public class TvShow {
     private String title;
 
     @CreatedDate
-    @Column(name = "created_by", nullable = false)
     private Date createdAt;
 
     @LastModifiedDate
-    @Column(name = "update_by", nullable = false)
     private Date updatedAt;
 
     @OneToMany(mappedBy = "tvShow", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
