@@ -9,6 +9,8 @@ public class TvShowResponse {
 
     private Long id;
     private String title;
-    private Map<Integer, SessionResponse> sessions = new HashMap<Integer, SessionResponse>();
+    private String createdAt;
+    private String updatedAt;
+    private Map<Integer, SessionResponse> sessions = new HashMap<>();
 
 }

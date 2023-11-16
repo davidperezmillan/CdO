@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Log4j2
@@ -49,6 +50,9 @@ public class SearchTvShowService implements SearchTvShowUsecase {
             TvShowResponse tvShowResponse = new TvShowResponse();
             tvShowResponse.setTitle(tvShow.getTitle());
             tvShowResponse.setId(tvShow.getId());
+
+            tvShowResponse.setCreatedAt(convert(tvShow.getCreatedAt()));
+            tvShowResponse.setUpdatedAt(convert(tvShow.getUpdatedAt()));
 
             log.debug("Serie: " + tvShow.getTitle() + " - " + tvShow.getId());
             Map<Integer, SessionResponse> sessions = new HashMap<>();
@@ -96,6 +100,8 @@ public class SearchTvShowService implements SearchTvShowUsecase {
             TvShowResponse tvShowResponse = new TvShowResponse();
             tvShowResponse.setTitle(tvShow.getTitle());
             tvShowResponse.setId(tvShow.getId());
+            tvShowResponse.setCreatedAt(convert(tvShow.getCreatedAt()));
+            tvShowResponse.setUpdatedAt(convert(tvShow.getUpdatedAt()));
 
             log.debug("Serie: " + tvShow.getTitle() + " - " + tvShow.getId());
             Map<Integer, SessionResponse> sessions = new HashMap<>();
@@ -122,5 +128,10 @@ public class SearchTvShowService implements SearchTvShowUsecase {
         pageResponse.setContent(Collections.singletonList(result));
         return pageResponse;
 
+    }
+
+    private String convert(Date fecha) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(fecha);
     }
 }
