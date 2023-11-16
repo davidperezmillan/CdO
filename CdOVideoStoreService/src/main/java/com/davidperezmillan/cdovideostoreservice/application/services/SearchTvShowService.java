@@ -131,7 +131,8 @@ public class SearchTvShowService implements SearchTvShowUsecase {
     }
 
     private String convert(Date fecha) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return sdf.format(fecha);
+        if (fecha == null)
+            return null;
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(fecha);
     }
 }
