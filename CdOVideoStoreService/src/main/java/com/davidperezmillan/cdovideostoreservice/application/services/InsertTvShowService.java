@@ -1,9 +1,9 @@
 package com.davidperezmillan.cdovideostoreservice.application.services;
 
-import com.davidperezmillan.cdovideostoreservice.application.usecases.InsertTvShowUsecase;
 import com.davidperezmillan.cdovideostoreservice.application.scrap.dtos.CalidadEnum;
 import com.davidperezmillan.cdovideostoreservice.application.scrap.dtos.ScrapBeanResponse;
 import com.davidperezmillan.cdovideostoreservice.application.scrap.services.DonTorrentScraperService;
+import com.davidperezmillan.cdovideostoreservice.application.usecases.InsertTvShowUsecase;
 import com.davidperezmillan.cdovideostoreservice.infrastructure.bbdd.entities.Episode;
 import com.davidperezmillan.cdovideostoreservice.infrastructure.bbdd.entities.Session;
 import com.davidperezmillan.cdovideostoreservice.infrastructure.bbdd.entities.Torrent;
@@ -11,6 +11,7 @@ import com.davidperezmillan.cdovideostoreservice.infrastructure.bbdd.entities.Tv
 import com.davidperezmillan.cdovideostoreservice.infrastructure.bbdd.repositories.TvShowRepository;
 import com.davidperezmillan.cdovideostoreservice.infrastructure.rest.dtos.SessionResponse;
 import com.davidperezmillan.cdovideostoreservice.infrastructure.rest.dtos.TvShowResponse;
+import com.davidperezmillan.cdovideostoreservice.infrastructure.slack.SlackService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,9 +25,9 @@ import java.util.Map;
 @Service
 public class InsertTvShowService implements InsertTvShowUsecase {
 
-    private DonTorrentScraperService donTorrentScraperService;
+    private final DonTorrentScraperService donTorrentScraperService;
 
-    private TvShowRepository tvShowRepository;
+    private final TvShowRepository tvShowRepository;
 
     @Autowired
     public InsertTvShowService(DonTorrentScraperService donTorrentScraperService, TvShowRepository tvShowRepository) {
@@ -71,6 +72,8 @@ public class InsertTvShowService implements InsertTvShowUsecase {
     public List<TvShowResponse> addPremieres() {
         List<ScrapBeanResponse> scrapBeanResponses = donTorrentScraperService.getPremieres();
         List<TvShow> saveds = save(scrapBeanResponses);
+
+        SlackService.sendMessage("Se han encontrado " + saveds.size() + " series");
 
         log.info("Se han encontrado " + saveds.size() + " series");
         List<TvShowResponse> result = new ArrayList<>();
@@ -141,7 +144,7 @@ public class InsertTvShowService implements InsertTvShowUsecase {
     }
 
     private List<TvShow> save(List<ScrapBeanResponse> scrapBeanResponses) {
-        List<TvShow> tvShows = new ArrayList();
+        List<TvShow> tvShows = new ArrayList<>();
         // mappear
         for (ScrapBeanResponse scrapBeanResponse : scrapBeanResponses) {
             // update or save

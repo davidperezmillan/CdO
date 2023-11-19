@@ -1,0 +1,16 @@
+server:
+    port : 8081
+
+spring:
+    test:
+        classes: src/test/java
+
+slack:
+    bot:
+        icon: ":smiley:"
+        username: CDO Video Store
+
+logging:
+    level:
+        com.davidperezmillan.cdovideostoreservice: DEBUG
+        org.hibernate: WARN

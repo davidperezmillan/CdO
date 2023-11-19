@@ -1,6 +1,3 @@
-server:
-    port : 8085
-
 spring:
     datasource:
         url: jdbc:h2:mem:testdb
@@ -14,14 +11,19 @@ spring:
         database-platform: org.hibernate.dialect.H2Dialect
         hibernate:
             ddl-auto: update
-
-
     test:
         classes: src/test/java
-
+slack:
+    bot:
+        url: ${SLACK_TEST_URL}
+        channel: test
+        icon: ":smiley:"
+        username: CDO Video Store
 logging:
     level:
         com.davidperezmillan.cdovideostoreservice: DEBUG
-        org.hibernate: DEBUG
+        org.hibernate: WARN
 
-
+scheduled:
+    cron:
+        expression: 9 9 9 9 9 ?
