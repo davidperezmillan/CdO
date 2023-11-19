@@ -15,7 +15,7 @@ public class Episode {
     @JoinColumn(name = "session_id")
     private Session session;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Torrent torrent = new Torrent();
 
 }

@@ -18,7 +18,7 @@ public class Session {
     @JoinColumn(name = "tv_show_id")
     private TvShow tvShow;
 
-    @OneToMany(mappedBy = "session", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "session", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Map<Integer, Episode> episodes = new HashMap<Integer, Episode>();
 
 }

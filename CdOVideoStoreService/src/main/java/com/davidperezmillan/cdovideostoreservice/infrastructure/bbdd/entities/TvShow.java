@@ -26,7 +26,7 @@ public class TvShow {
     @LastModifiedDate
     private Date updatedAt;
 
-    @OneToMany(mappedBy = "tvShow", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "tvShow", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Map<Integer, Session> sessions = new HashMap<>();
 
 }
