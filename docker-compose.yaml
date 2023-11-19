@@ -19,6 +19,8 @@ services:
     build:
       context: CdOVideoStoreService/.  # Usa el directorio actual como contexto para encontrar el Dockerfile
       dockerfile: Dockerfile  # Nombre del Dockerfile
+    env_file:
+      - CdOVideoStoreService/.env  
     ports:
       - "8081:8080"  # Mapea el puerto del contenedor al puerto del host
     depends_on:
