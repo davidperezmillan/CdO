@@ -19,7 +19,7 @@ slack:
 
 scheduled:
     cron:
-        expression: 0 0 */2 * * *
+        expression: ${CRON_EXPRESSION}
 
 #Override the default port
 server:
