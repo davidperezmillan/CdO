@@ -1,5 +1,4 @@
-server:
-    port : 8080
+
 
 spring:
     datasource:
@@ -21,3 +20,7 @@ slack:
 scheduled:
     cron:
         expression: 0 0 */4 * * *
+
+#Override the default port
+server:
+    port: 8080
