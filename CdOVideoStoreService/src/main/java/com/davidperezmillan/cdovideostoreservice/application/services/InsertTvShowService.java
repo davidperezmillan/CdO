@@ -73,7 +73,10 @@ public class InsertTvShowService implements InsertTvShowUsecase {
         List<ScrapBeanResponse> scrapBeanResponses = donTorrentScraperService.getPremieres();
         List<TvShow> saveds = save(scrapBeanResponses);
 
-        SlackService.sendMessage("Se han encontrado " + saveds.size() + " series");
+        // if exist saveds send Slack message
+        if (saveds.stream().findAny().isPresent()) {
+            SlackService.sendMessage("Se han encontrado " + saveds.size() + " series");
+        }
 
         log.info("Se han encontrado " + saveds.size() + " series");
         List<TvShowResponse> result = new ArrayList<>();

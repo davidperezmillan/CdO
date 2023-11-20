@@ -28,7 +28,7 @@ public class ScheduledService {
         // Lógica de tu tarea programada
         log.info("Tarea programada ejecutada");
         List<TvShowResponse> nuevos = insertTvShowService.addPremieres();
-        String texto = nuevos.stream().map(TvShowResponse::getTitle).collect(Collectors.joining("/n"));
-        SlackService.sendMessage("Tarea programada ejecutada: " + texto);
+        String text = nuevos.stream().map(TvShowResponse::getTitle).collect(Collectors.joining("\n"));
+        SlackService.sendMessage("Tarea programada ejecutada: \n" + text);
     }
 }
