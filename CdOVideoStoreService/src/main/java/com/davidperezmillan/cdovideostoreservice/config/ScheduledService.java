@@ -28,13 +28,16 @@ public class ScheduledService {
         // Lógica de tu tarea programada
         log.info("Tarea programada ejecutada");
         List<TvShowResponse> nuevos = insertTvShowService.addPremieres();
+        StringBuilder text = new StringBuilder();
         if (nuevos.size() > 0) {
-            String text = nuevos.stream().map(TvShowResponse::getTitle).collect(Collectors.joining("\n"));
-            text = "Nuevas series añadidas: \n" + text;
-            SlackService.sendMessage(text);
+            for (TvShowResponse nuevo : nuevos) {
+                log.info("Nueva serie: " + nuevo.getTitle());
+                int capitulos = insertTvShowService.addCapitulos(nuevo.getId());
+                text.append("Nueva serie añadida: ").append(nuevo.getTitle()).append(" con ").append(capitulos).append(" capítulos\n");
+            }
+            SlackService.sendMessage(text.toString());
         }else{
-            SlackService.sendMessage("No hay nuevas series");
+            SlackService.sendMessage(text.append("No hay nuevas series").toString());
         }
-
     }
 }
