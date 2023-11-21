@@ -9,4 +9,5 @@ public interface TvShowRepository extends JpaRepository<TvShow, Long> {
     TvShow findByTitle(String title);
 
     Page<TvShow> findByTitleContainingIgnoreCase(String title, Pageable pageable);
+
 }

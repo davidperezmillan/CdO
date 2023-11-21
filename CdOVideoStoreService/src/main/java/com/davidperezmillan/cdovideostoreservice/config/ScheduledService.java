@@ -9,7 +9,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Log4j2
@@ -33,10 +32,11 @@ public class ScheduledService {
             for (TvShowResponse nuevo : nuevos) {
                 log.info("Nueva serie: " + nuevo.getTitle());
                 int capitulos = insertTvShowService.addCapitulos(nuevo.getId());
-                text.append("Nueva serie añadida: ").append(nuevo.getTitle()).append(" con ").append(capitulos).append(" capítulos\n");
+                text.append("Nueva serie añadida: ").append(nuevo.getTitle()).append(" con ").append(capitulos)
+                        .append(" capítulos\n");
             }
             SlackService.sendMessage(text.toString());
-        }else{
+        } else {
             SlackService.sendMessage(text.append("No hay nuevas series").toString());
         }
     }
