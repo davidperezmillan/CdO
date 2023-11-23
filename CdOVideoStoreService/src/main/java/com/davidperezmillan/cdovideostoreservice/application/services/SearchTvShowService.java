@@ -130,6 +130,43 @@ public class SearchTvShowService implements SearchTvShowUsecase {
 
     }
 
+    @Override
+    public PageResponse getId(Long id) {
+        String proxyTorrent = RulesDonTorrent.getProxyDonTorrent();
+
+        TvShow tvShow = tvShowRepository.getById(id);
+        TvShowResponse tvShowResponse = new TvShowResponse();
+        tvShowResponse.setTitle(tvShow.getTitle());
+        tvShowResponse.setId(tvShow.getId());
+
+        tvShowResponse.setCreatedAt(convert(tvShow.getCreatedAt()));
+        tvShowResponse.setUpdatedAt(convert(tvShow.getUpdatedAt()));
+
+        log.debug("Serie: " + tvShow.getTitle() + " - " + tvShow.getId());
+        Map<Integer, SessionResponse> sessions = new HashMap<>();
+        for (Map.Entry<Integer, Session> session : tvShow.getSessions().entrySet()) {
+            log.debug("Session: " + session.getKey());
+            SessionResponse sessionResponse = new SessionResponse();
+            sessionResponse.setUrl(proxyTorrent + session.getValue().getUrl());
+            Map<Integer, String> episodes = new HashMap<>();
+            for (Map.Entry<Integer, Episode> episode : session.getValue().getEpisodes().entrySet()) {
+                log.debug("Episode: " + episode.getKey());
+                episodes.put(episode.getKey(), episode.getValue().getTorrent().getMagnetLink());
+            }
+            sessionResponse.setEpisodes(episodes);
+            sessions.put(session.getKey(), sessionResponse);
+        }
+        tvShowResponse.setSessions(sessions);
+
+        PageResponse pageResponse = new PageResponse();
+        pageResponse.setTotalElements(1);
+        pageResponse.setTotalPages(1);
+        pageResponse.setNumber(1);
+        pageResponse.setSize(1);
+        pageResponse.setContent(Collections.singletonList(tvShowResponse));
+        return pageResponse;
+    }
+
     private String convert(Date fecha) {
         if (fecha == null)
             return null;

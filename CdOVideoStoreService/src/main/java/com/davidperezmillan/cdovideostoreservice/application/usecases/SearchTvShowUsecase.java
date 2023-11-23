@@ -7,4 +7,6 @@ public interface SearchTvShowUsecase {
     PageResponse getAll(int page, int size);
 
     PageResponse getTvShow(String title, int page, int size);
+
+    PageResponse getId(Long id);
 }
