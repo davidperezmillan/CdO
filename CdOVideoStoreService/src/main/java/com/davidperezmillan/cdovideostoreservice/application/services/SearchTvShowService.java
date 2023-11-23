@@ -49,6 +49,7 @@ public class SearchTvShowService implements SearchTvShowUsecase {
         for (TvShow tvShow : resultBBDD) {
             TvShowResponse tvShowResponse = new TvShowResponse();
             tvShowResponse.setTitle(tvShow.getTitle());
+            tvShowResponse.setSinopsis(tvShow.getSinopsis());
             tvShowResponse.setId(tvShow.getId());
 
             tvShowResponse.setCreatedAt(convert(tvShow.getCreatedAt()));
@@ -99,6 +100,7 @@ public class SearchTvShowService implements SearchTvShowUsecase {
         for (TvShow tvShow : resultBBDD) {
             TvShowResponse tvShowResponse = new TvShowResponse();
             tvShowResponse.setTitle(tvShow.getTitle());
+            tvShowResponse.setSinopsis(tvShow.getSinopsis());
             tvShowResponse.setId(tvShow.getId());
             tvShowResponse.setCreatedAt(convert(tvShow.getCreatedAt()));
             tvShowResponse.setUpdatedAt(convert(tvShow.getUpdatedAt()));

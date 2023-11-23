@@ -7,6 +7,7 @@ public class ScrapBeanResponse {
 
     private String name;
     private String url;
+    private String sinopsis;
     private int session;
     private int episode;
     private CalidadEnum quality;

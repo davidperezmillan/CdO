@@ -28,5 +28,4 @@ public class TvShowDeleteController {
         deleteTvShowUsecase.deleteAll();
     }
 
-
 }

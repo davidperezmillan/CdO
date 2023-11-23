@@ -9,6 +9,7 @@ public class TvShowResponse {
 
     private Long id;
     private String title;
+    private String sinopsis;
     private String createdAt;
     private String updatedAt;
     private Map<Integer, SessionResponse> sessions = new HashMap<>();

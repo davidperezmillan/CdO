@@ -112,6 +112,7 @@ public class InsertTvShowService implements InsertTvShowUsecase {
         TvShow saveds = tvShowRepository.findByTitle(title);
         saveds.getSessions().forEach((key, value) -> {
             List<ScrapBeanResponse> scrapBeanResponses = donTorrentScraperService.getEpisode(value.getUrl());
+            saveds.setSinopsis(scrapBeanResponses.get(0).getSinopsis());
             scrapBeanResponses.forEach(scrapBeanResponse -> {
                 Torrent torrent = new Torrent();
                 torrent.setMagnetLink(scrapBeanResponse.getUrl());
@@ -132,6 +133,7 @@ public class InsertTvShowService implements InsertTvShowUsecase {
         TvShow resultBBDD = tvShowRepository.findById(id).get();
         resultBBDD.getSessions().forEach((key, value) -> {
             List<ScrapBeanResponse> scrapBeanResponses = donTorrentScraperService.getEpisode(value.getUrl());
+            resultBBDD.setSinopsis(scrapBeanResponses.get(0).getSinopsis());
             scrapBeanResponses.forEach(scrapBeanResponse -> {
                 Torrent torrent = new Torrent();
                 torrent.setMagnetLink(scrapBeanResponse.getUrl());

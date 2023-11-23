@@ -95,6 +95,8 @@ public class DonTorrentScraperService {
                 ScrapBeanResponse scrapBeanResponse = new ScrapBeanResponse();
                 scrapBeanResponse.setUrl("https:" + linkElement.attr("href"));
                 scrapBeanResponse.setName(doc.select("h1[class='text-center']").text());
+                scrapBeanResponse.setSinopsis(doc.select("p[class='text-justify']").text());
+                log.debug("Serie:Sinopsis " + scrapBeanResponse.getSinopsis());
                 int[] info = evaluateSessionEpisode(linkElement);
                 scrapBeanResponse.setSession(info[0]);
                 scrapBeanResponse.setEpisode(info[1]);

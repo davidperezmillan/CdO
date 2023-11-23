@@ -20,6 +20,10 @@ public class TvShow {
     @Column(unique = true)
     private String title;
 
+    @Lob
+    @Column
+    private String sinopsis;
+
     @CreatedDate
     private Date createdAt;
 
