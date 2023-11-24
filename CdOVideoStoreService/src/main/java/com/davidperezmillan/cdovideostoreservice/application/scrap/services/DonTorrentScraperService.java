@@ -25,8 +25,6 @@ public class DonTorrentScraperService {
         List<ScrapBeanResponse> scrapBeansResponse = new ArrayList<ScrapBeanResponse>();
         proxyDonTorrent = RulesDonTorrent.getProxyDonTorrent();
         try {
-            final Boolean[] breakLoop = { Boolean.FALSE };
-
             for (int i = 1; i <= 30; i++) {
                 String url = proxyDonTorrent + "/series/hd/letra-" + title.toLowerCase().charAt(0) + "/page/" + i;
                 log.info("Scraping: " + url);
@@ -35,8 +33,7 @@ public class DonTorrentScraperService {
                 Elements findElements = doc.select("a[href*=/serie/]");
                 findElements.forEach(seriesLink -> {
                     ScrapBeanResponse scrapBeanResponse = RulesDonTorrent.extracted(seriesLink.text());
-                    if (scrapBeanResponse != null && scrapBeanResponse.getName() != null
-                            && !scrapBeanResponse.getName().isEmpty()) {
+                    if ( scrapBeanResponse.getName() != null  && !scrapBeanResponse.getName().isEmpty()) {
                         scrapBeanResponse.setUrl(RulesDonTorrent.normalizeUrl(seriesLink.attr("href")));
                         scrapBeansResponse.add(scrapBeanResponse);
                     }
@@ -95,7 +92,7 @@ public class DonTorrentScraperService {
                 ScrapBeanResponse scrapBeanResponse = new ScrapBeanResponse();
                 scrapBeanResponse.setUrl("https:" + linkElement.attr("href"));
                 scrapBeanResponse.setName(doc.select("h1[class='text-center']").text());
-                scrapBeanResponse.setSinopsis(doc.select("p[class='text-justify']").text());
+                scrapBeanResponse.setSinopsis(normalizeBlob(doc.select("p[class='text-justify']").text()));
                 log.debug("Serie:Sinopsis " + scrapBeanResponse.getSinopsis());
                 int[] info = evaluateSessionEpisode(linkElement);
                 scrapBeanResponse.setSession(info[0]);
@@ -122,6 +119,14 @@ public class DonTorrentScraperService {
         }
 
         return result;
+    }
+
+    private String normalizeBlob(String blob) {
+        blob = blob.replaceAll("Descripción:", "");
+        blob = blob.replaceAll("Sinopsis:", "");
+        blob = blob.trim();
+        blob = blob.length() > 10000 ? blob.substring(0, 10000) : blob;
+        return blob.replaceAll("\\\\", "");
     }
 
 }

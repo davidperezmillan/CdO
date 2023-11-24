@@ -21,7 +21,7 @@ public class TvShow {
     private String title;
 
     @Lob
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String sinopsis;
 
     @CreatedDate
