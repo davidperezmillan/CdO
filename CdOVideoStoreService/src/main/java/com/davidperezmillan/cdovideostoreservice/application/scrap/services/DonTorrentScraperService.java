@@ -33,7 +33,7 @@ public class DonTorrentScraperService {
                 Elements findElements = doc.select("a[href*=/serie/]");
                 findElements.forEach(seriesLink -> {
                     ScrapBeanResponse scrapBeanResponse = RulesDonTorrent.extracted(seriesLink.text());
-                    if ( scrapBeanResponse.getName() != null  && !scrapBeanResponse.getName().isEmpty()) {
+                    if (scrapBeanResponse.getName() != null && !scrapBeanResponse.getName().isEmpty()) {
                         scrapBeanResponse.setUrl(RulesDonTorrent.normalizeUrl(seriesLink.attr("href")));
                         scrapBeansResponse.add(scrapBeanResponse);
                     }
