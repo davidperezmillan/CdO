@@ -16,10 +16,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Log4j2
 @Service
@@ -78,7 +75,6 @@ public class InsertTvShowService implements InsertTvShowUsecase {
             SlackService.sendMessage("Se han encontrado " + saveds.size() + " series");
         }
 
-        log.info("Se han encontrado " + saveds.size() + " series");
         List<TvShowResponse> result = new ArrayList<>();
         for (TvShow tvShow : saveds) {
             TvShowResponse tvShowResponse = new TvShowResponse();
@@ -130,22 +126,26 @@ public class InsertTvShowService implements InsertTvShowUsecase {
 
     @Override
     public int addCapitulos(Long id) {
-        TvShow resultBBDD = tvShowRepository.findById(id).get();
-        resultBBDD.getSessions().forEach((key, value) -> {
-            List<ScrapBeanResponse> scrapBeanResponses = donTorrentScraperService.getEpisode(value.getUrl());
-            resultBBDD.setSinopsis(scrapBeanResponses.get(0).getSinopsis());
-            scrapBeanResponses.forEach(scrapBeanResponse -> {
-                Torrent torrent = new Torrent();
-                torrent.setMagnetLink(scrapBeanResponse.getUrl());
-                Episode episode = new Episode();
-                episode.setTorrent(torrent);
-                episode.setSession(resultBBDD.getSessions().get(key));
-                Session session = resultBBDD.getSessions().get(key);
-                session.getEpisodes().put(scrapBeanResponse.getEpisode(), episode);
+        Optional<TvShow> result = tvShowRepository.findById(id);
+        if (result.isPresent()){
+            TvShow resultBBDD = result.get();
+            resultBBDD.getSessions().forEach((key, value) -> {
+                List<ScrapBeanResponse> scrapBeanResponses = donTorrentScraperService.getEpisode(value.getUrl());
+                resultBBDD.setSinopsis(scrapBeanResponses.get(0).getSinopsis());
+                scrapBeanResponses.forEach(scrapBeanResponse -> {
+                    Torrent torrent = new Torrent();
+                    torrent.setMagnetLink(scrapBeanResponse.getUrl());
+                    Episode episode = new Episode();
+                    episode.setTorrent(torrent);
+                    episode.setSession(resultBBDD.getSessions().get(key));
+                    Session session = resultBBDD.getSessions().get(key);
+                    session.getEpisodes().put(scrapBeanResponse.getEpisode(), episode);
+                });
             });
-        });
-        tvShowRepository.save(resultBBDD);
-        return resultBBDD.getSessions().size();
+            tvShowRepository.save(resultBBDD);
+            return resultBBDD.getSessions().size();
+        }
+        return 0;
     }
 
     private List<TvShow> save(List<ScrapBeanResponse> scrapBeanResponses) {

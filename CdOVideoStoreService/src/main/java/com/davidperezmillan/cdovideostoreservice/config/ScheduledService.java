@@ -21,14 +21,13 @@ public class ScheduledService {
         this.insertTvShowService = insertTvShowService;
     }
 
-    // se ejecuta cada 15 minutos
     @Scheduled(cron = "${scheduled.cron.expression}")
     public void ejecutarTarea() {
         // Lógica de tu tarea programada
         log.info("Tarea programada ejecutada");
         List<TvShowResponse> nuevos = insertTvShowService.addPremieres();
         StringBuilder text = new StringBuilder();
-        if (nuevos.size() > 0) {
+        if (!nuevos.isEmpty()) {
             for (TvShowResponse nuevo : nuevos) {
                 log.info("Nueva serie: " + nuevo.getTitle());
                 int capitulos = insertTvShowService.addCapitulos(nuevo.getId());
@@ -36,8 +35,6 @@ public class ScheduledService {
                         .append(" capítulos\n");
             }
             SlackService.sendMessage(text.toString());
-        } else {
-            SlackService.sendMessage(text.append("No hay nuevas series").toString());
         }
     }
 }
