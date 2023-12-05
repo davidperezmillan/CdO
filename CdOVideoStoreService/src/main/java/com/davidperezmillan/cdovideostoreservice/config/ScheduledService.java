@@ -26,8 +26,9 @@ public class ScheduledService {
         // Lógica de tu tarea programada
         log.info("Tarea programada ejecutada");
         List<TvShowResponse> nuevos = insertTvShowService.addPremieres();
-        StringBuilder text = new StringBuilder();
+
         if (!nuevos.isEmpty()) {
+            StringBuilder text = new StringBuilder("Series actualizadas");
             for (TvShowResponse nuevo : nuevos) {
                 log.info("Nueva serie: " + nuevo.getTitle());
                 int capitulos = insertTvShowService.addCapitulos(nuevo.getId());

@@ -1,16 +1,28 @@
 server:
     port : 8081
 
+# Configuración de Elasticsearch
 spring:
     test:
         classes: src/test/java
+    data:
+        elasticsearch:
+            cluster-name: docker-cluster
+            cluster-nodes: elasticsearch:9200
 
 slack:
     bot:
         icon: ":smiley:"
         username: CDO Video Store
 
+
+# Configuración de Logging
 logging:
+    file:
+        name: logs/my-application.log
+        max-size: 10MB
+        max-history: 5
     level:
+        root: INFO
         com.davidperezmillan.cdovideostoreservice: DEBUG
         org.hibernate: WARN
