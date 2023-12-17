@@ -31,6 +31,7 @@ public class RestScrapController {
         return searchTvShowService.getAll(page, size);
     }
 
+    @CrossOrigin(origins = { "http://localhost", "http://192.168.1.195" })
     @GetMapping("/{title}")
     public PageResponse getTvShow(@PathVariable String title, @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
