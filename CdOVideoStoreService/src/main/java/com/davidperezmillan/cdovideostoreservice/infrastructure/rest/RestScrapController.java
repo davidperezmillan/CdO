@@ -24,6 +24,7 @@ public class RestScrapController {
         this.searchTvShowService = searchTvShowService;
     }
 
+    @CrossOrigin(origins = { "http://localhost", "http://192.168.1.195" })
     @GetMapping("/")
     public PageResponse getAll(@RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
