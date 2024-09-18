@@ -36,6 +36,9 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-maven-${{ matrix.service }}-
 
+    - name: List files
+      run: ls -R
+
     - name: Build ${{ matrix.service }}
       working-directory: ${{ matrix.service }}
       run: mvn clean install
